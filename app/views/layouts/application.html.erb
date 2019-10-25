@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>theqteam</title>
+   <%= csrf_meta_tags %>
+   <%= csp_meta_tag %>
+   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+   <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+   <%= favicon_link_tag 'favicon.gif' %>
+   <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+   <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+   <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
+   <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700' rel='stylesheet' type='text/css'>
+   <link href="https://unpkg.com/ionicons@4.4.8/dist/css/ionicons.min.css" rel="stylesheet">
+</head>
+<body>
+   <nav class="navbar navbar-expand-sm">
+      <div class="navbar-brand">
+         <%= link_to root_path, class: "navbar-brand" do %>
+         <img alt="PWR" src="http://www.powerreviews.com/wp-content/uploads/2017/02/PWR-Logo.png">
+         <% end %>
+      </div>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+         <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+         <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+               <%= link_to "All The Tests", all_tags_path,  { :class=>"nav-link" }  %> <span class="sr-only">(current)</span>
+            </li>
+            <li class="nav-item">
+               <%= link_to "Applications", tags_path,  { :class=>"nav-link" }  %> <span class="sr-only">(current)</span>
+            </li>
+            <li class="nav-item">
+               <%= link_to "Owners", owner_tags_path,  { :class=>"nav-link" }  %>
+            </li>
+            <% if controller_name == "tags" %>
+            <% if controller.action_name != "edit" %>
+            <li class="nav-item dropdown">
+               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Environment: <b><%= @env_tag.name %></b>
+               </a>
+               <div class="dropdown-menu pull-right" aria-labelledby="navbarDropdown">
+                  <% EnvironmentTag.all.select { |env_tag| env_tag != @env_tag }.each do | env_tag | %>
+                  <a><%= link_to env_tag.name, change_env_path(id: env_tag, stop_rotate: true), {:class=> "dropdown-item"} %></a>
+                  <% end %>
+               </div>
+            </li>
+            <li class="nav-item dropdown">
+               <a class="nav-link dropdown-toggle" id="rotate-env" href="#"role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Rotate: <b><%= session[:rotate] %></b>
+               </a>
+               <div class="dropdown-menu pull-right" id="rotate-env-li" aria-labelledby="navbarDropdown">
+                  <a><%= link_to "turn #{ session[:rotate] == true ? "off" : "on" } rotation", toggle_rotate_path, {:class=> "dropdown-item", :id=> "rotate-box", :remote=>true}%></a>
+               </div>
+            </li>
+            <% end %>
+            <script>
+               $("#rotate-env-li").click(function() {
+                  $("#rotate-box").hide();
+               });
+            </script>
+            <% end %>
+         </ul>
+         <% if controller_name == "tests" %>
+         <ul class="navbar-nav ml-auto nav-flex-icons">
+            <li class="nav-item">
+               <%= link_to "Edit Tags", edit_tags_path,  { :class=>"nav-link" }  %>
+            </li>
+            <li class="nav-item dropdown">
+               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Environment: <b><%= @env_tag.name %></b>
+               </a>
+               <div class="dropdown-menu pull-right" aria-labelledby="navbarDropdown">
+                  <% EnvironmentTag.all.select { |env_tag| env_tag != @env_tag }.each do | env_tag | %>
+                  <a><%= link_to env_tag.name, change_env_path(id: env_tag, stop_rotate: true), {:class=> "dropdown-item"} %></a>
+                  <% end %>
+               </div>
+            </li>
+            <li class="nav-item dropdown">
+               <a class="nav-link dropdown-toggle" id="rotate-env" href="#"role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Rotate: <b><%= session[:rotate] %></b>
+               </a>
+               <div class="dropdown-menu pull-right" id="rotate-env-li" aria-labelledby="navbarDropdown">
+                  <a><%= link_to "turn #{ session[:rotate] == true ? "off" : "on" } rotation", toggle_rotate_path, {:class=> "dropdown-item", :id=> "rotate-box", :remote=>true}%></a>
+               </div>
+            </li>
+         </ul>
+         <% else %>
+         <% if controller.action_name == "edit" %>
+         <ul class="navbar-nav ml-auto nav-flex-icons">
+            <li class="nav-item">
+               <%= link_to "Edit Tests", tests_path,  { :class=>"nav-link" }  %>
+            </li>
+         </ul>
+         <% else %>
+         <ul class="navbar-nav ml-auto nav-flex-icons">
+            <li class="nav-item">
+               <%= link_to "Settings", tests_path,  { :class=>"nav-link" }  %>
+            </li>
+         </ul>
+         <% end %>
+         <% end %>
+      </div>
+   </nav>
+   <% flash.each do |key, value| %>
+      <div class="alert alert-<%= key %>" id="qa-alert"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><%= value %></div>
+   <% end %>
+   <%= yield %>
+   <script>
+      <% if session[:rotate] %>
+         <%= render partial: '/layouts/rotate_env.js', locals: { next_env: EnvironmentTag.get_next_env(@env_tag) } %>
+      <% end %>
+   </script>
+   <script src="https://unpkg.com/ionicons@4.4.8/dist/ionicons.js"></script>
+</body>
+</html>

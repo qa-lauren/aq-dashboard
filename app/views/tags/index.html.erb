@@ -1,0 +1,13 @@
+<div class="tags-container" id="tags-title">
+   <article class="card">
+      <div class="card-header" id="<%=@env_tag.name%>">
+         <h1 class="test-name">
+            <%=@env_tag.name.upcase%> / <%=@tag_title%>
+         </h1>
+      </div>
+   </article>
+</div>
+
+<div class="tags-container">
+   <%= render partial: 'tag_card', collection: @tags, as: :tag %>
+</div>

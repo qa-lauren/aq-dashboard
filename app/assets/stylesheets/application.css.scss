@@ -1,0 +1,48 @@
+/*
+ *= require jquery-ui/autocomplete
+ *= require jquery-ui/tooltip
+ *= require jquery-ui/tabs
+ *= require jquery-ui/slider
+ *= require animate.css/animate.css
+ *= require_tree .
+ *= require_self
+ */
+ @import "bootstrap-sprockets";
+ @import "bootstrap";
+
+ @font-face {
+   font-family: 'Brandon Text Bold';
+   font-style: normal;
+   font-weight: normal;
+   src: local('Brandon Text Bold'), url('HVDFonts-BrandonText-Bold.woff') format('woff');
+ }
+
+ @font-face {
+    font-family: 'Brandon Text Bold';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Brandon Text Bold'), url('HVDFonts-BrandonText-Bold.woff') format('woff');
+  }
+
+  $appcolor:#383838;
+  $devcolor: #d6eaff;
+  $qacolor: #e3e3ff;
+  $prodcolor: #fdeddf;
+  $failure-orange: #FFA500;
+  $other: #d1d4d7;
+  $success: #8DC63F;
+  $failure: #ff3333;
+
+ body {
+    background-color: $appcolor !important;
+ }
+
+ .navbar-brand {
+    > img {
+      margin-right: -30px !important;
+      padding: 0 0 6px 0 !important;
+      margin-left: -20px !important;
+      height: 100% !important;
+      width: auto;
+   }
+}

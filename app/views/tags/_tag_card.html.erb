@@ -1,0 +1,93 @@
+<div class="card" id="display-card-<%=tag.id%>">
+   <div class="card-header" id= "<%=@env_tag.name%>">
+      <%= link_to tag_path(id: tag.id), class: "link-title" do %>
+      <h3 class="tag-name">
+         <%= tag.name %>
+      </h3>
+      <% end %>
+   </div>
+   <div class="card-description">
+      <div class ="tag-data">
+         <% if !tag_tests_by_env(tag, @env_tag).nil?%>
+            <ul class="list-inline list-inline-horizontal">
+               <li class="list-group-item tag-data-box tag-test-count">
+                  <h3><span class="icon-green"><%=tag_tests_count(tag,@env_tag, "success")%></span>/<%=tag_tests_by_env(tag, @env_tag).count%></h3>
+               </li>
+               <li class="list-group-item tag-data-box">
+                  <% if tag_tests_count(tag,@env_tag, "success")/tag_tests_by_env(tag, @env_tag).count.to_f*100 >75.0 %>
+                     <h3><i class="icon ion-md-checkmark-circle icon-green"></i>
+                        <%=number_to_percentage(tag_tests_count(tag,@env_tag, "success")/tag_tests_by_env(tag, @env_tag).count.to_f*100,precision:0)%>
+                     </h3>
+                  <% else %>
+                     <h3><i class="icon ion-md-close-circle icon-red"></i>
+                        <%=number_to_percentage(tag_tests_count(tag,@env_tag, "success")/tag_tests_by_env(tag, @env_tag).count.to_f*100,precision:0)%>
+                     </h3>
+                  <% end %>
+               </li>
+            </ul>
+         <% end %>
+      </div>
+      <div class="progress-container">
+         <% if !tag_tests_by_env(tag, @env_tag).nil?%>
+            <div class="progress" id ="progress-show-<%=tag.id%>">
+               <div class="progress-bar" id="success" style="width: <%=tag_tests_count(tag,@env_tag, "success")/tag_tests_by_env(tag, @env_tag).count.to_f*100.0 %>%"></div>
+               <div class="progress-bar" id="failure-orange" style="width: <%=tag_tests_count(tag,@env_tag, "failure-orange")/tag_tests_by_env(tag, @env_tag).count.to_f*100.0%>%"></div>
+               <div class="progress-bar" id="failure" style="width: <%=tag_tests_count(tag,@env_tag, "failure")/tag_tests_by_env(tag, @env_tag).count.to_f*100.0%>%"></div>
+               <div class="progress-bar" id="aborted" style="width: <%=tag_tests_count(tag,@env_tag, "aborted")/tag_tests_by_env(tag, @env_tag).count.to_f*100.0%>%"></div>
+            </div>
+         <% else %>
+            <div class="progress">
+               <div class="progress-bar other" style="width: 100%"></div>
+            </div>
+         <% end %>
+      </div>
+   </div>
+</div>
+
+<script>
+   $("#recent-failed-<%= tag.id %>").click(function (e) {
+      e.stopPropagation();
+   });
+   $("#failed-toggle-<%= tag.id %>").click(function (e) {
+      e.stopPropagation();
+      $("ul.recent-failed-list").hide();
+      if ($("#recent-failed-<%= tag.id %>").is(":visible")) {
+         $("#recent-failed-<%= tag.id %>").hide();
+      } else {
+         $("#recent-failed-<%= tag.id %>").show();
+      }
+   });
+</script>
+<script>
+   $("#never-<%= tag.id %>").click(function (e) {
+      e.stopPropagation();
+   });
+   $("#never-toggle-<%= tag.id %>").click(function (e) {
+      e.stopPropagation();
+      $("ul.recent-failed-list").hide();
+      if ($("#never-<%= tag.id %>").is(":visible")) {
+         $("#never-<%= tag.id %>").hide();
+      } else {
+         $("#never-<%= tag.id %>").show();
+      }
+   });
+</script>
+<script>
+   $("#stability-<%= tag.id %>").click(function (e) {
+      e.stopPropagation();
+   });
+   $("#stability-toggle-<%= tag.id %>").click(function (e) {
+      e.stopPropagation();
+      $("ul.recent-failed-list").hide();
+      if ($("#stability-<%= tag.id %>").is(":visible")) {
+         $("#stability-<%= tag.id %>").hide();
+      } else {
+         $("#stability-<%= tag.id %>").show();
+      }
+   });
+</script>
+<script>
+   $(document).click(function() {
+      $("ul.recent-failed-list").hide();
+   });
+</script>

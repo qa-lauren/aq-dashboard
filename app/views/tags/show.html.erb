@@ -1,0 +1,23 @@
+<div class="tags-container" id="tags-title">
+   <article class="card">
+      <div class="card-header" id="<%=@env_tag.name%>">
+         <h2 class="test-name">
+            <% if @tag.nil?%>
+               <%=@env_tag.name.upcase%> / All the Tests
+            <% else %>
+               <%=@env_tag.name.upcase%> / <%=@tag.tag_type%> / <%= @tag.name %>
+            <% end %>
+         </h2>
+         <h2 class="tests-count">
+            <% if @tag.nil?%>
+               <span class="icon-green"><%=all_success_tests_count(@env_tag)%></span>/<%=all_tests_count(@env_tag)%>
+            <% else %>
+               <span class="icon-green"><%=tag_tests_count(@tag,@env_tag, "success")%></span>/<%=tag_tests_total_count(@tag, @env_tag)%>
+            <% end %>
+         </h2>
+      </div>
+   </article>
+</div>
+<div class="grid tests-container">
+   <%= render partial: '/builds/build_card', collection: @builds, as: :build %>
+</div>

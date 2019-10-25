@@ -1,0 +1,109 @@
+<%= test = Test.where(id: build.test_id).first%>
+
+<div class="card" id= "build-card-<%=build.id%>">
+   <div class="card-header" id= "<%=(@env_tag.name)%>">
+      <%= link_to test.job_url, class: "link-title", target: :_blank do %>
+      <h6 class="test-name">
+         <%= test.name%>
+      </h6>
+      <% end %>
+   </div>
+   <div class="build-data">
+      <ul class="list-inline list-inline-horizontal">
+         <li class="list-group-item flex-build-data">
+            <p class="bold">last duration: </p>
+            <% if !build.last_duration.nil? %>
+               <p><%= "#{Time.at(build.last_duration/1000).utc.strftime("%-Mmin %-Ss")}"%></p>
+            <% else %>
+               <p> </p>
+            <% end %>
+         </li>
+         <li class="list-group-item flex-build-data">
+            <p class="bold">ave. duration: </p>
+            <% if !build.ave_duration.nil? %>
+               <p><%= "#{Time.at(build.ave_duration/1000).utc.strftime("%-Mmin %-Ss")}"%></p>
+            <% else %>
+               <p> </p>
+            <% end %>
+         </li>
+         <li class="list-group-item flex-build-data">
+               <% if !build.stability.nil? %>
+               <p class="bold">
+                  <% if build.stability > 75 %>
+                     <span><i class="icon ion-md-checkmark-circle icon-green checkmark-custom"></i></span>
+                  <% elsif build.stability < 75 %>
+                     <span><i class="icon ion-md-checkmark-circle icon-red checkmark-custom"></i></span>
+                  <% end %>
+                  health: </p>
+                  <p>
+                     <%= build.stability %>%
+                  </p>
+               <% else %>
+               <p class="bold">ave. duration: </p>
+               <p> </p>
+               <% end %>
+         </li>
+      </ul>
+   </div>
+   <div class="test-data">
+      <ul class="list-inline list-inline-horizontal">
+         <li class="list-group-item flex-build" id= "<%=build.status%>">
+            <p><%= link_to "#{test.job_url}#{build.last_number}/console", :target => :_blank do %>
+               <b><%=build.status%></b><%="#{build.last_number}" %>
+               <% end %>
+            </p>
+            <p><% if !build.last_time.nil?%>
+               <%= "#{distance_of_time_in_words(build.last_time, Time.now)} ago" %>
+               <% end %>
+            </p>
+         </li>
+         <% if build.status == 'failure' || build.status == 'failure-orange'%>
+            <% if !build.success_number.nil? %>
+               <li class="list-group-item flex-build" id= "success" >
+                  <p><%= link_to "#{test.job_url}#{build.success_number}/console", :target => :_blank do %>
+                     <b>last success </b><%="#{build.success_number}" %>
+                     <% end %>
+                  </p>
+                  <p><% if !build.success_time.nil?%>
+                     <%= "#{distance_of_time_in_words(build.success_time, Time.now)} ago" %>
+                     <% end %>
+                  </p>
+               </li>
+            <% end %>
+         <% end %>
+      </ul>
+   </div>
+   <div class="test-footer panel-footer" id= "<%=(@env_tag.name)%>">
+      <% if !test.app_tag.nil? %>
+         <span class="badge badge-primary"><%= test.app_tag.name %></span>
+      <% end %>
+      <% if !test.feature_tag.nil? %>
+         <span class="badge badge-info"><%= test.feature_tag.name %></span>
+      <% end %>
+      <% if !test.owner_tag.nil? %>
+         <span class="badge badge-info"><%= test.owner_tag.name %></span>
+      <% end %>
+      <% if !test.app_tag.nil? %>
+         <span class="badge badge-warning"><%= test.app_tag.name %></span>
+      <% end %>
+      <p class="action-buttons">
+         <% if build.status == 'in-progress' %>
+            <span class="jenkins-action" id="jenkins-stop-<%=build.id%>">
+               <%= link_to (jenkins_stop_build_path(build.id)), :remote=>true do %>
+                  <i class="icon ion-md-remove-circle custom-icon-construct">stop</i>
+               <% end %>
+            </span>
+         <% end %>
+         <span class="jenkins-action" id="jenkins-start-<%=test.id%>">
+            <%= link_to (jenkins_build_test_path(test.id)), :remote=>true do %>
+               <i class="icon ion-md-construct custom-icon-construct">build</i>
+            <% end %>
+         </span>
+         <span class="jenkins-action" id="jenkins-refresh-<%=build.id%>">
+            <%= link_to (jenkins_refresh_build_path(build.id)), :remote=>true do %>
+               <i class="icon ion-md-refresh-circle custom-icon-refresh-circle">refresh</i>
+            <% end %>
+         </span>
+      </p>
+   </div>
+</div>

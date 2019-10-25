@@ -1,0 +1,13 @@
+$('#jenkins-start-<%= @test.id %>').click(function () {
+  return false;
+});
+
+setTimeout(function () {
+  $('#jenkins-start-<%= @test.id %>').unbind('click');
+}, 30000);
+
+$.notify({
+  message: "<%= flash[:info] %>"
+},{
+  type: "info"
+});
