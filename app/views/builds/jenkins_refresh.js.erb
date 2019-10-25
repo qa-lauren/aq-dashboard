@@ -1,13 +1,4 @@
-$('#jenkins-refresh-<%= @build.id %>').click(function () {
-   $('#build-card-<%= @build.id %>').replaceWith('<%= j render partial: "build_card", locals: {build: @build} %>');
-   return false;
-});
-
-setTimeout(function () {
-  $('#jenkins-refresh-<%= @build.id %>').unbind('click');
-}, 30000);
-
-
+$('#build-card-<%= @build.id %>').replaceWith('<%= j render partial: "build_card", locals: {build: @new_build} %>');
 $.notify({
   message: "<%= flash[:info] %>"
 },{

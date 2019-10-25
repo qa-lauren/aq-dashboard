@@ -6,7 +6,7 @@ class BuildsController < ApplicationController
    end
 
    def jenkins_refresh
-      @build.jenkins_update(@env_tag.name)
+      @new_build = @build.jenkins_update(@env_tag.name)
       respond_to do |format|
          format.html
          format.js

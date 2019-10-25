@@ -63,13 +63,14 @@ class Build < ApplicationRecord
 
    def jenkins_update(env) #(refresh)
       test = Test.where(id: test_id).first
-      test.parameterized ? Build.jenkins_update_param_build(env, test) : Build.jenkins_update_nonparam_build(env, test)
+      build = test.parameterized ? Build.jenkins_update_param_build(env, test) : Build.jenkins_update_nonparam_build(env, test)
+      return build
+      byebug
    end
 
    def jenkins_stop(job_url) #(refresh)
       url = job_url.gsub("http://ci.powerreviews.io/job/qa-tests/", "http://qabuildmonitor:fe855fdcecc278b8f7fef828fc565611@ci.powerreviews.io/job/qa-tests/")
       token_url = "#{url}/#{id}/stop"
-      byebug
       puts "stop token url= #{token_url}"
       response = RestClient::Request.execute(
          :method => :post,
@@ -100,7 +101,6 @@ class Build < ApplicationRecord
                build.save
                build.reload
             end
-
             build_params = {}
             #get builds data from jenkins - stability and ave_duration params
             request_url = "#{get_jenkins_formatted_url(test.job_url)}api/json?tree=builds[result,duration]"
@@ -115,7 +115,6 @@ class Build < ApplicationRecord
             end
             #get build data from jenkins
             request_url = "#{get_jenkins_formatted_url(test.job_url)}api/json?tree=name,color,lastBuild[number,timestamp,duration],lastSuccessfulBuild[number,timestamp]"
-
             json = get_request_json(request_url)
             #status param
             if !json["color"].nil?
@@ -129,6 +128,8 @@ class Build < ApplicationRecord
                   build_params[:status]=json["color"]
                end
             end
+
+
             #last build data params
             if !json["lastBuild"].nil?
                build_params[:last_duration] = json["lastBuild"]["duration"]
@@ -146,9 +147,12 @@ class Build < ApplicationRecord
                   end
                end
             end
+
             build.update(build_params)
             build.save
             build.reload
+
+            return build
 
          end
 
@@ -266,6 +270,8 @@ class Build < ApplicationRecord
             build.update(build_params)
             build.save
             build.reload
+            byebug
+            return build
          end
 
          def self.jenkins_update_param_tests(env)

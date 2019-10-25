@@ -1,0 +1,19 @@
+$(window).scrollTop(0);
+
+$(".test-container-<%=@test.id%>").after("<%= j render(partial: 'tests/edit', locals: { test: @test, owner_tags: Tag.select_options('Owner'), app_tags: Tag.select_options('Application'), feature_tags: Tag.select_options('Feature') } ) %>");
+$(".edit-test-settings").click(function() {
+	$(".edit-test-modal-backdrop").remove();
+})
+
+$(".test-modal").click(function(e) {
+	e.stopPropagation();
+});
+
+$("#close-test-modal").click(function() {
+	$(".edit-test-modal-backdrop").remove();
+});
+
+
+$(".grid").click(function() {
+	$(".edit-test-modal-backdrop").remove();
+});

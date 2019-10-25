@@ -1,0 +1,15 @@
+<div class="edit-tags-container"
+   <div class="accordion" id="accordionExample">
+      <div class="card">
+         <div class="card-header" id="headingOne">
+            <h2 class="mb-0">
+               Tests
+            </h2>
+         </div>
+         <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+            <div class="card-body">
+               <%= react_component 'Tests', { data: @tests, app_tags: Tag.get_edit_json_test("Application"),feature_tags: Tag.get_edit_json_test("Feature"),owner_tags: Tag.get_edit_json_test("Owner")}%>
+            </div>
+         </div>
+      </div>
+</div>
