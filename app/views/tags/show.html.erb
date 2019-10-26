@@ -8,16 +8,95 @@
                <%=@env_tag.name.upcase%> / <%=@tag.tag_type%> / <%= @tag.name %>
             <% end %>
          </h2>
+         <% if !@tag.nil?%>
          <h2 class="tests-count">
-            <% if @tag.nil?%>
-               <span class="icon-green"><%=all_success_tests_count(@env_tag)%></span>/<%=all_tests_count(@env_tag)%>
-            <% else %>
-               <span class="icon-green"><%=tag_tests_count(@tag,@env_tag, "success")%></span>/<%=tag_tests_total_count(@tag, @env_tag)%>
-            <% end %>
+            <span class="icon-green">
+               <%=helper_tag_count_by_status(@tag, @env_tag.name, "success") %>
+            </span>
+            /<%=helper_tag_count(@tag, @env_tag.name) %>
          </h2>
+         <% end %>
+      </div>
+      <div class="filters">
+         <div class="ui-group">
+            <h3>Status: </h3>
+            <div class="button-group js-radio-button-group" data-filter-group="build-status">
+               <button class="button is-checked" data-filter="">ALL</button>
+               <button class="button" id="success" data-filter=".success">Success</button>
+               <button class="button" id="in-progress-filter" data-filter=".in-progress">In Progress</button>
+               <button class="button" id="failure-orange" data-filter=".failure-orange">Failure</button>
+               <button class="button" id="failure" data-filter=".failure">True Failure</button>
+            </div>
+         </div>
+         <div class="ui-group">
+            <h3>Application: </h3>
+            <div class="button-group js-radio-button-group" data-filter-group="app">
+               <button class="button is-checked" data-filter="">ALL</button>
+               <%@app_names.each do |tag|%>
+                  <button class="button" id="app" data-filter=".<%=tag.downcase.gsub(/[[:space:]]/, '')%>"><%=tag%></button>
+               <%end%>
+            </div>
+            </div>
+            <div class="ui-group">
+               <h3>Feature: </h3>
+               <div class="button-group js-radio-button-group" data-filter-group="feature">
+                  <button class="button is-checked" data-filter="">ALL</button>
+                  <%@feature_names.each do |tag|%>
+                     <button class="button" id="feature" data-filter=".<%=tag.downcase.gsub(/[[:space:]]/, '')%>"><%=tag%></button>
+                  <%end%>
+               </div>
+            </div>
+         <div class="ui-group">
+            <h3>Owner: </h3>
+            <div class="button-group js-radio-button-group" data-filter-group="owner">
+               <button class="button is-checked" data-filter="">ALL</button>
+               <%@owner_names.each do |tag|%>
+                  <button class="button" id="owner" data-filter=".<%=tag.downcase.gsub(/[[:space:]]/, '')%>"><%=tag%></button>
+               <%end%>
+            </div>
+         </div>
       </div>
    </article>
 </div>
 <div class="grid tests-container">
-   <%= render partial: '/builds/build_card', collection: @builds, as: :build %>
+   <%= render partial: '/tests/test_card', collection: @builds, as: :build %>
 </div>
+<script>
+   // init Isotope
+   var $grid = $('.grid').isotope({
+     percentPosition: true,
+     layoutMode: 'fitRows',
+     itemSelector: '.color-shape',
+   });
+   // store filter for each group
+   var filters = {};
+   $('.filters').on( 'click', '.button', function( event ) {
+     var $button = $( event.currentTarget );
+     // get group key
+     var $buttonGroup = $button.parents('.button-group');
+     var filterGroup = $buttonGroup.attr('data-filter-group');
+     // set filter for group
+     filters[ filterGroup ] = $button.attr('data-filter');
+     // combine filters
+     var filterValue = concatValues( filters );
+     // set filter for Isotope
+     $grid.isotope({ filter: filterValue });
+   });
+   // change is-checked class on buttons
+   $('.button-group').each( function( i, buttonGroup ) {
+     var $buttonGroup = $( buttonGroup );
+     $buttonGroup.on( 'click', 'button', function( event ) {
+       $buttonGroup.find('.is-checked').removeClass('is-checked');
+       var $button = $( event.currentTarget );
+       $button.addClass('is-checked');
+     });
+   });
+   // flatten object by concatting values
+   function concatValues( obj ) {
+     var value = '';
+     for ( var prop in obj ) {
+       value += obj[ prop ];
+     }
+     return value;
+   }
+</script>

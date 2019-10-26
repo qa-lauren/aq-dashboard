@@ -1,4 +1,5 @@
 $('#build-card-<%= @build.id %>').replaceWith('<%= j render partial: "build_card", locals: {build: @new_build} %>');
+
 $.notify({
   message: "<%= flash[:info] %>"
 },{

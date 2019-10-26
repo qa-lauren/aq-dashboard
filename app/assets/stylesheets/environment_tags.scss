@@ -1,3 +1,162 @@
-// Place all the styles related to the EnvironmentTags controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.search-icon {
+  height: 20px;
+  display: inline-block;
+  float: right;
+}
+
+table {
+   margin-top: 3rem !important;
+}
+
+.form-control-sm {
+   font-size: 10px !important;
+   height:25px !important;
+}
+
+.edit-test-table {
+	font-size: 10px;
+   >thead {
+      background-color: #999999 !important;
+      color: white !important;
+   }
+}
+
+#header-fixed {
+  position: fixed;
+  top: 15px;
+  display: none;
+  background-color: #999999 !important;
+  color: white !important;
+
+
+}
+
+.search-label {
+  font-weight: bold;
+  float: right;
+  margin-top:5px;
+  padding-right: 4px;
+  color: #b2b7c5;
+}
+
+#search-input {
+   float:right;
+   width: 40%;
+   margin-bottom:4px;
+}
+
+.test-name-field {
+  width: 30%;
+}
+
+.test-tag-field {
+  width: 10%;
+}
+
+.test-actions-field {
+  width: 10%;
+}
+
+.tag-name-field {
+  width: 45%;
+}
+
+.tag-type-field {
+  width: 30%;
+}
+
+.tag-actions-field {
+  width: 25%;
+}
+
+.edit-tags-container {
+   padding: 10px 15px 0 15px;
+}
+
+.delete-modal-backdrop {
+  margin:0;
+  background-color: black;
+  position: absolute;
+  top: 10%;
+  left: 30%;
+  max-width: 500px;
+  min-height: 300px;
+}
+.delete-modal {
+  border: 1px solid #ddd;
+  background-color: #fff;
+
+}
+.delete-header {
+  padding: 30px 30px 8px 30px;
+}
+.delete-body {
+  padding: 0 30px 30px 30px;
+}
+#delete-modal-test {
+  border-left: none;
+  border-right: none;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  border-radius: 0;
+}
+#delete-modal-tests {
+  overflow-y: auto;
+  height: 200px;
+}
+.delete-title {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.delete-subtitle {
+  margin-bottom: 0;
+}
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {
+  background-image: none;
+  background-color: #337ab7;
+  border-color: #2e6da4;
+}
+
+.delete-modal-buttons {
+  margin-top: 15px;
+  height: 30px;
+}
+
+.delete-modal-button {
+  float: right;
+  margin-left: 8px;
+}
+
+#test-tabs-list {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  background-color: transparent;
+  border-radius: 0;
+  height: 36px;
+  width: 100%;
+  padding: 0;
+}
+
+.add-tag-form {
+   margin-top: -30px;
+}
+
+#tag-form-group{
+   position: absolute;
+   top: 0px;
+   right: 8px;
+   padding: 5px !important;
+}
+.pwr-tag-form-control {
+   margin-right: 10px;
+   > input {
+      width: 200px !important;
+   }
+}
+.pwr-tag-select-control {
+   margin-right: 10px;
+   > select {
+      width: 100px !important;
+   }
+}

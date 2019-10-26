@@ -68,6 +68,4 @@ Tag.create(name: "Lauren", tag_type: "Owner")
 Tag.create(name: "Darianna", tag_type: "Owner")
 Tag.create(name: "Tylor", tag_type: "Owner")
 
-Test.update_jenkins_build_data_nonparam_all
-
-# Build.jenkins_update_nonparam
+Build.jenkins_update_all_tests

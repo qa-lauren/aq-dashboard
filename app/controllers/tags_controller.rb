@@ -17,7 +17,7 @@ class TagsController < ApplicationController
       @tag_title="Owners"
       if @env_tag.name == 'dev'
          @tags = Tag.joins(:owner_dev_builds).uniq
-      elsif @env.name == 'qa'
+      elsif @env_tag.name == 'qa'
          @tags = Tag.joins(:owner_qa_builds).uniq
       else
          @tags = Tag.joins(:owner_prod_builds).uniq
@@ -29,10 +29,11 @@ class TagsController < ApplicationController
 
    def all
       @tag_title="All The Tests"
-      @builds = Build.where(env: @env_tag.name)
-      @feature_names = Tag.where(tag_type: "Feature").pluck(:name)
+      @builds = Build.where(env:@env_tag.name)
       @app_names = Tag.where(tag_type: "Application").pluck(:name)
+      @feature_names = Tag.where(tag_type: "Feature").pluck(:name)
       @owner_names = Tag.where(tag_type: "Owner").pluck(:name)
+
       respond_to do |format|
          format.html { render template: "tags/show" }
       end
@@ -40,19 +41,35 @@ class TagsController < ApplicationController
 
    def show
       @tag = Tag.find(params[:id])
-      if @tag.tag_type=="Application"
+
          if @env_tag.name == 'dev'
-            @builds = @tag.app_dev_builds
+            if @tag.tag_type=="Application"
+               @builds = @tag.app_dev_builds
+            elsif @tag.tag_type=="Owner"
+               @builds = @tag.owner_dev_builds
+            end
+            @app_names = Tag.joins(:app_dev_builds).uniq.pluck(:name)
+            @feature_names = Tag.joins(:feature_dev_builds).uniq.pluck(:name)
+            @owner_names = Tag.joins(:owner_dev_builds).uniq.pluck(:name)
+         elsif @env_tag.name == 'qa'
+            if @tag.tag_type=="Application"
+               @builds = @tag.app_qa_builds
+            elsif @tag.tag_type=="Owner"
+               @builds = @tag.owner_qa_builds
+            end
+            @app_names = Tag.joins(:app_qa_builds).uniq.pluck(:name)
+            @feature_names = Tag.joins(:feature_qa_builds).uniq.pluck(:name)
+            @owner_names = Tag.joins(:owner_qa_builds).uniq.pluck(:name)
          else
-            @builds = @tag.app_qa_builds
+            if @tag.tag_type=="Application"
+               @builds = @tag.app_prod_builds
+            elsif @tag.tag_type=="Owner"
+               @builds = @tag.owner_prod_builds
+            end
+            @app_names = Tag.joins(:app_prod_builds).uniq.pluck(:name)
+            @feature_names = Tag.joins(:feature_prod_builds).uniq.pluck(:name)
+            @owner_names = Tag.joins(:owner_prod_builds).uniq.pluck(:name)
          end
-      elsif @tag.tag_type=="Owner"
-         if @env_tag.name == 'dev'
-            @builds = @tag.owner_dev_builds
-         else
-            @builds = @tag.owner_qa_builds
-         end
-      end
    end
 
    def create
