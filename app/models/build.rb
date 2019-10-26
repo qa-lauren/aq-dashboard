@@ -66,7 +66,6 @@ class Build < ApplicationRecord
       test = Test.where(id: test_id).first
       build = test.parameterized ? Build.jenkins_update_param_build(env, test) : Build.jenkins_update_nonparam_build(env, test)
       return build
-      byebug
    end
 
    def jenkins_stop(job_url) #(refresh)
@@ -155,14 +154,15 @@ class Build < ApplicationRecord
    def self.jenkins_update_nonparam_tests(env)
       jobs_json = get_jenkins_jobs_json("nonparam-#{env}")
       jobs_json.each do |job|
-         if !Test.where(name: job["name"]).nil?
-            test = Test.where(name: job["name"])
+         if !Test.where(name: job["name"]).first.nil?
+            test = Test.where(name: job["name"]).first
          else
             test = Test.create(name: job["name"], job_url: job["url"], parameterized: false)
             test.save
             test.reload
          end
          jenkins_update_nonparam_build(env, test)
+         puts "#{env.upcase} **************** #{test.name}"
       end
    end
    # PARAM ################################################################################################################
@@ -193,7 +193,7 @@ class Build < ApplicationRecord
          end
       end
       #get build data from jenkins
-      request_url="#{get_jenkins_formatted_url(job_url)}api/xml?tree=builds[result,duration,url,actions[parameters[name,value]]]&xpath=//build[action/parameter[value='#{env}']]&wrapper=builds"
+      request_url="#{get_jenkins_formatted_url(test.job_url)}api/xml?tree=builds[result,duration,url,actions[parameters[name,value]]]&xpath=//build[action/parameter[value='#{env}']]&wrapper=builds"
       build_json=get_request_xml_json(request_url)
       if !build_json.nil?
          if !build_json["builds"].nil?
@@ -209,7 +209,7 @@ class Build < ApplicationRecord
                   last_build_number_json=get_request_json("#{get_jenkins_formatted_url(last_build_number_url)}api/json?tree=result,timestamp,number,duration")
                   if !last_build_number_json.nil?
                      if !last_build_number_json["number"].nil?
-                        build_params[:last_build_number] = last_build_number_json["number"]
+                        build_params[:last_number] = last_build_number_json["number"]
                      end
                      if !last_build_number_json["timestamp"].nil?
                         build_params[:last_build_time] = Time.at(last_build_number_json["timestamp"]/1000).to_datetime
@@ -226,7 +226,7 @@ class Build < ApplicationRecord
                end
             end
          end
-         request_url="#{get_jenkins_formatted_url(job_url)}api/xml?tree=builds[result,duration,url,actions[parameters[name,value]]]&xpath=//build[action/parameter[value='#{env}'] and result/text()[1]='SUCCESS']&wrapper=builds"
+         request_url="#{get_jenkins_formatted_url(test.job_url)}api/xml?tree=builds[result,duration,url,actions[parameters[name,value]]]&xpath=//build[action/parameter[value='#{env}'] and result/text()[1]='SUCCESS']&wrapper=builds"
          success_build_number_json=get_request_xml_json(request_url)
          if !success_build_number_json.nil?
             if !success_build_number_json["builds"].nil?
@@ -242,14 +242,14 @@ class Build < ApplicationRecord
                         last_success_build_number_json=get_request_json("#{get_jenkins_formatted_url(last_success_build_number_url)}api/json?tree=result,timestamp,number,duration")
                         if !last_success_build_number_json.nil?
                            if !last_success_build_number_json["number"].nil?
-                              build_params[:success_build_number] = last_success_build_number_json["number"]
+                              build_params[:success_number] = last_success_build_number_json["number"]
                            end
                            if !last_success_build_number_json["timestamp"].nil?
-                              build_params[:success_build_time] = Time.at(last_success_build_number_json["timestamp"]/1000).to_datetime
+                              build_params[:success_time] = Time.at(last_success_build_number_json["timestamp"]/1000).to_datetime
                            end
                            if build_params[:status] == "failure"
-                              if !build_params[:success_build_time].nil?
-                                 if build_params[:success_build_time] > DateTime.now - 3.days
+                              if !build_params[:success_time].nil?
+                                 if build_params[:success_time] > DateTime.now - 3.days
                                     build_params[:status] = "failure-orange"
                                  end
                               end
@@ -266,15 +266,14 @@ class Build < ApplicationRecord
       build.update(build_params)
       build.save
       build.reload
-      byebug
       return build
    end
 
    def self.jenkins_update_param_tests(env)
       jobs_json = get_jenkins_jobs_json('param')
       jobs_json.each do |job|
-         if !Test.where(name: job["name"]).nil?
-            test = Test.where(name: job["name"])
+         if !Test.where(name: job["name"]).first.nil?
+            test = Test.where(name: job["name"]).first
          else
             test = Test.create(name: job["name"], job_url: job["url"], parameterized: true)
             test.save
@@ -283,7 +282,7 @@ class Build < ApplicationRecord
          jenkins_update_param_build(env, test)
       end
       jobs_json.each do |job|
-         if !Test.where(name: job["name"]).nil?
+         if !Test.where(name: job["name"]).first.nil?
             test = Test.where(name: job["name"])
          else
             test = Test.create(name: job["name"], job_url: job["url"], parameterized: true)
@@ -291,6 +290,8 @@ class Build < ApplicationRecord
             test.reload
          end
          jenkins_update_param_build(env, test)
+         puts  "#{env.upcase} ================ #{test.name}"
+
       end
    end
 
