@@ -212,7 +212,7 @@ class Build < ApplicationRecord
                         build_params[:last_number] = last_build_number_json["number"]
                      end
                      if !last_build_number_json["timestamp"].nil?
-                        build_params[:last_build_time] = Time.at(last_build_number_json["timestamp"]/1000).to_datetime
+                        build_params[:last_time] = Time.at(last_build_number_json["timestamp"]/1000).to_datetime
                      end
                      if !last_build_number_json["duration"].nil?
                         build_params[:last_duration] = last_build_number_json["duration"]
