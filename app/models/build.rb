@@ -22,14 +22,21 @@ class Build < ApplicationRecord
    end
 
    def self.get_request_json(request_url)
-      response=RestClient::Request.execute(:url => request_url, :method => :get, :verify_ssl => false)
+      response = RestClient::Request.execute(:url => request_url, :method => :get, :verify_ssl => false)
       if !response.nil?
          return JSON.parse(response.body)
+      else
+         return nil #necessary?
       end
    end
 
    def self.get_request_xml_json(request_url)
-      return JSON.parse(Hash.from_xml(RestClient::Request.execute(:url => request_url, :method => :get, :verify_ssl => false)).to_json)
+      response = RestClient::Request.execute(:url => request_url, :method => :get, :verify_ssl => false)
+      if !response.nil?
+         return JSON.parse(Hash.from_xml(response).to_json)
+      else
+         return nil #necessary?
+      end
    end
 
    def self.get_jenkins_jobs_json(type)
@@ -112,38 +119,40 @@ class Build < ApplicationRecord
                build_params[:ave_duration]=calculate_ave_duration(json["builds"])
             end
          end
-      end
-      #get build data from jenkins
-      request_url = "#{get_jenkins_formatted_url(test.job_url)}api/json?tree=name,color,lastBuild[number,timestamp,duration],lastSuccessfulBuild[number,timestamp]"
-      json = get_request_json(request_url)
-      #status param
-      if !json["color"].nil?
-         if json["color"] == "blue"
-            build_params[:status]="success"
-         elsif json["color"] == "red"
-            build_params[:status]="failure"
-         elsif json["color"].include?("anime")
-            build_params[:status]="progress"
-         else
-            build_params[:status]=json["color"]
-         end
-      end
-      #last build data params
-      if !json["lastBuild"].nil?
-         build_params[:last_duration] = json["lastBuild"]["duration"]
-         build_params[:last_number] = json["lastBuild"]["number"]
-         build_params[:last_time] = Time.at(json["lastBuild"]["timestamp"]/1000).to_datetime
-      end
-
-      #last successful build data params
-      if !json["lastSuccessfulBuild"].nil?
-         build_params[:success_number] = json["lastSuccessfulBuild"]["number"]
-         build_params[:success_time] = Time.at(json["lastSuccessfulBuild"]["timestamp"]/1000).to_datetime
-         if build_params[:status]== "failure"
-            if build_params[:success_time] > DateTime.now - 3.days
-               build_params[:status]="failure-orange"
+         #get build data from jenkins
+         request_url = "#{get_jenkins_formatted_url(test.job_url)}api/json?tree=name,color,lastBuild[number,timestamp,duration],lastSuccessfulBuild[number,timestamp]"
+         json = get_request_json(request_url)
+         #status param
+         if !json["color"].nil?
+            if json["color"] == "blue"
+               build_params[:status]="success"
+            elsif json["color"] == "red"
+               build_params[:status]="failure"
+            elsif json["color"].include?("anime")
+               build_params[:status]="progress"
+            else
+               build_params[:status]=json["color"]
             end
          end
+         #last build data params
+         if !json["lastBuild"].nil?
+            build_params[:last_duration] = json["lastBuild"]["duration"]
+            build_params[:last_number] = json["lastBuild"]["number"]
+            build_params[:last_time] = Time.at(json["lastBuild"]["timestamp"]/1000).to_datetime
+         end
+
+         #last successful build data params
+         if !json["lastSuccessfulBuild"].nil?
+            build_params[:success_number] = json["lastSuccessfulBuild"]["number"]
+            build_params[:success_time] = Time.at(json["lastSuccessfulBuild"]["timestamp"]/1000).to_datetime
+            if build_params[:status]== "failure"
+               if build_params[:success_time] > DateTime.now - 3.days
+                  build_params[:status]="failure-orange"
+               end
+            end
+         end
+      else
+         build_params[:status] = "notbuilt"
       end
       build.update(build_params)
       build.save
@@ -261,6 +270,8 @@ class Build < ApplicationRecord
                   end
                end
             end
+         else
+            build_params[:status]="notbuilt"
          end
       end
       build.update(build_params)
@@ -297,10 +308,10 @@ class Build < ApplicationRecord
 
    def self.jenkins_update_all_tests
       start = Time.now.getutc
-      jenkins_update_nonparam_tests("dev")
-      jenkins_update_nonparam_tests("qa")
+      # jenkins_update_nonparam_tests("dev")
+      # jenkins_update_nonparam_tests("qa")
       jenkins_update_nonparam_tests("prod")
-
+byebug
       jenkins_update_param_tests("dev")
       jenkins_update_param_tests("qa")
       jenkins_update_param_tests("prod")
