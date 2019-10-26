@@ -152,7 +152,7 @@ class Build < ApplicationRecord
             end
          end
       else
-         build_params[:status] = "notbuilt"
+         build_params[:status] = "notbuilt" #dont think this is necessary for nonparam tests
       end
       build.update(build_params)
       build.save
@@ -163,6 +163,7 @@ class Build < ApplicationRecord
    def self.jenkins_update_nonparam_tests(env)
       jobs_json = get_jenkins_jobs_json("nonparam-#{env}")
       jobs_json.each do |job|
+         puts  "#{env.upcase} ================ #{job["name"]}"
          if !Test.where(name: job["name"]).first.nil?
             test = Test.where(name: job["name"]).first
          else
@@ -171,7 +172,7 @@ class Build < ApplicationRecord
             test.reload
          end
          jenkins_update_nonparam_build(env, test)
-         puts "#{env.upcase} **************** #{test.name}"
+         puts  "==================== #{test.name}"
       end
    end
    # PARAM ################################################################################################################
@@ -283,6 +284,7 @@ class Build < ApplicationRecord
    def self.jenkins_update_param_tests(env)
       jobs_json = get_jenkins_jobs_json('param')
       jobs_json.each do |job|
+         puts  "#{env.upcase} ================ #{job["name"]}"
          if !Test.where(name: job["name"]).first.nil?
             test = Test.where(name: job["name"]).first
          else
@@ -291,8 +293,11 @@ class Build < ApplicationRecord
             test.reload
          end
          jenkins_update_param_build(env, test)
+         puts  "==================== #{test.name}"
       end
+
       jobs_json.each do |job|
+         puts  "#{env.upcase} ================ #{job["name"]}"
          if !Test.where(name: job["name"]).first.nil?
             test = Test.where(name: job["name"])
          else
@@ -301,7 +306,7 @@ class Build < ApplicationRecord
             test.reload
          end
          jenkins_update_param_build(env, test)
-         puts  "#{env.upcase} ================ #{test.name}"
+         puts  "==================== #{test.name}"
 
       end
    end
@@ -310,8 +315,8 @@ class Build < ApplicationRecord
       start = Time.now.getutc
       # jenkins_update_nonparam_tests("dev")
       # jenkins_update_nonparam_tests("qa")
-      jenkins_update_nonparam_tests("prod")
-byebug
+      # jenkins_update_nonparam_tests("prod")
+
       jenkins_update_param_tests("dev")
       jenkins_update_param_tests("qa")
       jenkins_update_param_tests("prod")
