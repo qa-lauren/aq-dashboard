@@ -177,6 +177,7 @@ class Build < ApplicationRecord
    end
    # PARAM ################################################################################################################
    def self.jenkins_update_param_build(env, test)
+puts "jenkins_update_param_build"
       if !Build.find_by(env: env, test_id: test.id).nil?
          if env == 'dev'
             build = test.dev_build
@@ -190,6 +191,7 @@ class Build < ApplicationRecord
          build.save
          build.reload
       end
+puts "=========build params"
       build_params = {}
       #get builds data from jenkins - stability and ave_duration params
       request_url = "#{get_jenkins_formatted_url(test.job_url)}api/json?tree=builds[result,duration]"
@@ -292,6 +294,8 @@ class Build < ApplicationRecord
             test.save
             test.reload
          end
+
+         puts "Now update! #{test.name}"
          jenkins_update_param_build(env, test)
          puts  "==================== #{test.name}"
       end
@@ -299,7 +303,7 @@ class Build < ApplicationRecord
       jobs_json.each do |job|
          puts  "#{env.upcase} ================ #{job["name"]}"
          if !Test.where(name: job["name"]).first.nil?
-            test = Test.where(name: job["name"])
+            test = Test.where(name: job["name"]).first
          else
             test = Test.create(name: job["name"], job_url: job["url"], parameterized: true)
             test.save
@@ -313,9 +317,9 @@ class Build < ApplicationRecord
 
    def self.jenkins_update_all_tests
       start = Time.now.getutc
-      # jenkins_update_nonparam_tests("dev")
-      # jenkins_update_nonparam_tests("qa")
-      # jenkins_update_nonparam_tests("prod")
+      jenkins_update_nonparam_tests("dev")
+      jenkins_update_nonparam_tests("qa")
+      jenkins_update_nonparam_tests("prod")
 
       jenkins_update_param_tests("dev")
       jenkins_update_param_tests("qa")
