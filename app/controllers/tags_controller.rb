@@ -5,22 +5,31 @@ class TagsController < ApplicationController
    def index
       @tag_title="Applications"
       if @env_tag.name == 'dev'
-         @tags = Tag.joins(:app_dev_builds).uniq
+         # @tags = Tag.joins(:app_dev_builds).uniq
+         #FATAL -- : [b986694d-fdea-4ed4-852b-30879267def6]
+         #[b986694d-fdea-4ed4-852b-30879267def6] ActiveRecord::StatementInvalid (PG::UndefinedColumn: ERROR:  column builds.env does not exist
+         #LINE 1: ..."builds" ON "builds"."test_id" = "tests"."id" AND "builds"."..
+         @tags = Tag.includes(:app_dev_builds)
+
       elsif @env_tag.name == 'qa'
-         @tags = Tag.joins(:app_qa_builds).uniq
+         # @tags = Tag.joins(:app_qa_builds).uniq
+         @tags = Tag.includes(:app_qa_builds)
+
       else
-         @tags = Tag.joins(:app_prod_builds).uniq
+         # @tags = Tag.joins(:app_prod_builds).uniq
+         @tags = Tag.includes(:app_prod_builds)
+
       end
    end
 
    def owner
       @tag_title="Owners"
       if @env_tag.name == 'dev'
-         @tags = Tag.joins(:owner_dev_builds).uniq
+         @tags = Tag.includes(:owner_dev_builds)
       elsif @env_tag.name == 'qa'
-         @tags = Tag.joins(:owner_qa_builds).uniq
+         @tags = Tag.includes(:owner_qa_builds)
       else
-         @tags = Tag.joins(:owner_prod_builds).uniq
+         @tags = Tag.includes(:owner_prod_builds)
       end
       respond_to do |format|
          format.html { render template: "tags/index" }
