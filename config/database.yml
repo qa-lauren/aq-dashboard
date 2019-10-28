@@ -79,7 +79,14 @@ test:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
 production:
-  <<: *default
-  database: aq_dashboard_production
-  username: aq_dashboard
-  password: <%= ENV['AQ_DASHBOARD_DATABASE_PASSWORD'] %>
+  adapter: postgresql
+  encoding: unicode
+  database: qa_tests
+  username: app
+  password: K0bg8v4TvLdWae8dio9FniCWo
+  host: multi.qa.rds.us-west-2.pwr
+  port: 5432
+  encoding: utf8
+  # For details on connection pooling, see Rails configuration guide
+  # http://guides.rubyonrails.org/configuring.html#database-pooling
+  pool: 25

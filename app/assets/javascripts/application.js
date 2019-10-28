@@ -16,6 +16,8 @@
 //= require_tree .
 //= require_tree .
 
+
+
 $(document).ajaxComplete(function(event, request) {
 	var msg = request.getResponseHeader('X-Message');
 	var type = request.getResponseHeader('X-Message-Type');

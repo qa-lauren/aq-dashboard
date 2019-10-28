@@ -7,7 +7,7 @@ Rails.application.routes.draw do
    end
    resources :builds do
       member do
-         get 'refresh'
+         get 'update'
          get 'jenkins_refresh'
          get 'jenkins_stop'
       end

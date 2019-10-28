@@ -5,6 +5,7 @@ class Build < ApplicationRecord
    belongs_to :prod_test, class_name: 'Test', optional: true
    has_many :notes, dependent: :destroy
 
+
    def self.get_job_url(test_name)
       "http://ci.powerreviews.io/job/qa-tests/job/#{test_name}/"
    end
@@ -273,10 +274,13 @@ puts "=========build params"
                   end
                end
             end
-         else
-            build_params[:status]="notbuilt"
          end
       end
+
+      if build_params[:status].nil?
+            build_params[:status]="notbuilt"
+      end
+
       build.update(build_params)
       build.save
       build.reload
@@ -323,7 +327,6 @@ puts "=========build params"
 
       jenkins_update_param_tests("dev")
       jenkins_update_param_tests("qa")
-      jenkins_update_param_tests("prod")
       stop = Time.now.getutc
       diff = Time.diff(start, stop)
       puts "TOTAL TIME ------- #{diff}"

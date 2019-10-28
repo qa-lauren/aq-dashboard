@@ -73,7 +73,7 @@
             </li>
             <% if build.status == 'failure' || build.status == 'failure-orange'%>
                <% if !build.success_number.nil? %>
-                  <li class="list-group-item flex-build" id= "success" >
+                  <li class="list-group-item flex-build" id= "<%=build.status%>" >
                      <p><%= link_to "#{test.job_url}#{build.success_number}/console", :target => :_blank do %>
                         <b>last success </b><%="#{build.success_number}" %>
                         <% end %>

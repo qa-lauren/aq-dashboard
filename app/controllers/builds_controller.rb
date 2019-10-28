@@ -2,7 +2,13 @@ class BuildsController < ApplicationController
    before_action :set_build, only: [:update, :jenkins_refresh, :jenkins_stop]
 
    def update
+      puts "build update"
       @build.reload
+      # byebug
+      # respond_to do |format|
+      #    format.html
+      #    format.js
+      # end
    end
 
    def jenkins_refresh
