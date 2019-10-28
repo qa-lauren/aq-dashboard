@@ -71,15 +71,15 @@
 # Build.jenkins_update_all_tests
 
 
-# Test.where("name like 'Engagement%'").each do |test|
-# 	# a = Tag.find_by name: "UI - Moderation"
-# 	# a.app_tests << test
-#    a = Tag.find_by name: "FUE"
-#    a.feature_tests << test
-# 	# e = Tag.find_by name: "Ben"
-# 	# e.owner_tests << test
-#
-# end
+Test.where("name like 'ModerationAlerts%'").each do |test|
+	a = Tag.find_by name: "ModerationAlerts"
+	a.app_tests << test
+   a = Tag.find_by name: "Client Moderation"
+   a.feature_tests << test
+	e = Tag.find_by name: "Lauren"
+	e.owner_tests << test
+
+end
 # Test.where("name like 'Pwr%'").each do |test|
 # 	a = Tag.find_by name: "UI - Moderation"
 # 	a.app_tests << test
@@ -87,14 +87,14 @@
 #    # a.feature_tests << test
 # 	e = Tag.find_by name: "Ben"
 # 	e.owner_tests << test
-#
+
 # end
 # Test.where("name like '%Analytics%'").each do |test|
 # 	a = Tag.find_by name: "Reporting"
 # 	a.app_tests << test
 # 	e = Tag.find_by name: "Greg"
 # 	e.owner_tests << test
-#
+
 # end
 
 # Test.where("name like 'Shopify%'").each do |test|
@@ -102,33 +102,26 @@
 # 	a.app_tests << test
 # 	e = Tag.find_by name: "Lauren"
 # 	e.owner_tests << test
-#
+
 # end
-#
+
 # Test.where("name like 'z-%'").each do |test|
 # 	f = Tag.find_by name: "Friel"
 # 	f.owner_tests << test
 # end
-#
+
 # Test.where("name like 'dev-%'").each do |test|
-#
+
 #    f = Tag.find_by name: "Friel"
 #    f.owner_tests << test
 # end
-#
+
 # Test.where("name like '%cdm_%'").each do |test|
 # 	a = Tag.find_by name: "Moderation Services"
 # 	a.app_tests << test
 # 	f = Tag.find_by name: "Friel"
 # 	f.owner_tests << test
 # end
-
-Test.where("name like 'Portal%'").each do |test|
-	a = Tag.find_by name: "UI - Portal"
-	a.app_tests << test
-	f = Tag.find_by name: "Lauren"
-	f.owner_tests << test
-end
 # Test.where("name like 'Brand-Engage-%'").each do |test|
 # 	a = Tag.find_by name: "Moderation Services"
 # 	a.app_tests << test
@@ -137,7 +130,7 @@ end
 # 	f = Tag.find_by name: "JJ"
 # 	f.owner_tests << test
 # end
-#
+
 # Test.where("name like 'Brand-Engage_%'").each do |test|
 # 	a = Tag.find_by name: "UI - Moderation"
 # 	a.app_tests << test
@@ -174,15 +167,15 @@ end
 # 	f = Tag.find_by name: "JJ"
 # 	f.owner_tests << test
 # end
-#
+
 # Test.where("name like 'Core-Services%'").each do |test|
 # 	a = Tag.find_by name: "Core Data Services"
 # 	a.app_tests << test
 # 	f = Tag.find_by name: "JJ"
 # 	f.owner_tests << test
 # end
-#
-#
+
+
 #    Test.where("name like 'Engagement-Services%'").each do |test|
 #    a = Tag.find_by name: "Engagement Services"
 #    a.app_tests << test
@@ -195,45 +188,45 @@ end
 # 	f = Tag.find_by name: "JJ"
 # 	f.owner_tests << test
 # end
-#
+
 # Test.where("name like 'Product-Services%'").each do |test|
 #    a = Tag.find_by name: "Product Services"
 #    a.app_tests << test
 #    f = Tag.find_by name: "JJ"
 #    f.owner_tests << test
 # end
-#
-#
+
+
 #    Test.where("name like 'Shared-Services%'").each do |test|
 #    a = Tag.find_by name: "Shared Services"
 #    a.app_tests << test
 #    f = Tag.find_by name: "Friel"
 #    f.owner_tests << test
 # end
-#
-#
+
+
 #    Test.where("name like 'Write-Services%'").each do |test|
 #    a = Tag.find_by name: "Write Services"
 #    a.app_tests << test
 #    f = Tag.find_by name: "Friel"
 #    f.owner_tests << test
 # end
-#
-#
+
+
 #    Test.where("name like 'Tools%'").each do |test|
 #    a = Tag.find_by name: "UI - Tools"
 #    a.app_tests << test
 #    f = Tag.find_by name: "Lauren"
 #    f.owner_tests << test
 # end
-#
+
 #       Test.where("name like 'Log-Delivery%'").each do |test|
 #    a = Tag.find_by name: "Log Delivery"
 #    a.app_tests << test
 #    f = Tag.find_by name: "Friel"
 #    f.owner_tests << test
 # end
-#
+
 # Test.where("name like 'CDM%'").each do |test|
 # 	a = Tag.find_by name: "UI - Moderation"
 # 	a.app_tests << test
@@ -250,39 +243,9 @@ end
 # 	e.feature_tests << test
 # 	e = Tag.find_by name: "RSD"
 # 	e.owner_tests << test
-#
+
 # end
 
-Test.where("name like '%sharedservices%'").each do |test|
-	a = Tag.find_by name: "Shared Services"
-	a.app_tests << test
-
-
-
-end
-
-Test.where("name like 'writeservices%'").each do |test|
-	a = Tag.find_by name: "Write Services"
-	a.app_tests << test
-
-
-
-end
-
-Test.where("name like 'dev-writeservices%'").each do |test|
-	a = Tag.find_by name: "WAR"
-	a.feature_tests << test
-
-end
-
-Test.where("name like 'Display4%'").each do |test|
-	a = Tag.find_by name: "UI - Display 4"
-	a.app_tests << test
-	a = Tag.find_by name: "Review Display"
-	a.feature_tests << test
-	e = Tag.find_by name: "John"
-	e.owner_tests << test
-end
 
 # Test.where("name like 'Extranet-%'").each do |test|
 # 	a = Tag.find_by name: "Pufferfish Services"
@@ -297,25 +260,25 @@ end
 # 	a.app_tests << test
 # 	e = Tag.find_by name: "JJ"
 # 	e.owner_tests << test
-#
+
 # end
-#
+
 # Test.where("name like '%Reporting%'").each do |test|
 # 	a = Tag.find_by name: "Reporting"
 # 	a.app_tests << test
 # 	e = Tag.find_by name: "Greg"
 # 	e.owner_tests << test
-#
+
 # end
-#
+
 # Test.where("name like 'Read-Services%'").each do |test|
 # 	a = Tag.find_by name: "Read Services"
 # 	a.app_tests << test
 # 	e = Tag.find_by name: "Friel"
 # 	e.owner_tests << test
-#
+
 # end
-#
+
 # Test.where("name like '%writeservices%'").each do |test|
 # 	a = Tag.find_by name: "Write Services"
 # 	a.app_tests << test

@@ -5,19 +5,19 @@ class TagsController < ApplicationController
    def index
       @tag_title="Applications"
       if @env_tag.name == 'dev'
-         # @tags = Tag.joins(:app_dev_builds).uniq
+         @tags = Tag.joins(:app_dev_builds).uniq
          #FATAL -- : [b986694d-fdea-4ed4-852b-30879267def6]
          #[b986694d-fdea-4ed4-852b-30879267def6] ActiveRecord::StatementInvalid (PG::UndefinedColumn: ERROR:  column builds.env does not exist
          #LINE 1: ..."builds" ON "builds"."test_id" = "tests"."id" AND "builds"."..
-         @tags = Tag.includes(:app_dev_builds)
+         # @tags = Tag.includes(:app_dev_builds).where(tag_type: "Application")
 
       elsif @env_tag.name == 'qa'
-         # @tags = Tag.joins(:app_qa_builds).uniq
-         @tags = Tag.includes(:app_qa_builds)
+         @tags = Tag.joins(:app_qa_builds).uniq
+         # @tags = Tag.includes(:app_qa_builds).where(tag_type: "Application")
 
       else
          # @tags = Tag.joins(:app_prod_builds).uniq
-         @tags = Tag.includes(:app_prod_builds)
+         # @tags = Tag.includes(:app_prod_builds).where(tag_type: "Application")
 
       end
    end
@@ -25,11 +25,11 @@ class TagsController < ApplicationController
    def owner
       @tag_title="Owners"
       if @env_tag.name == 'dev'
-         @tags = Tag.includes(:owner_dev_builds)
+         @tags = Tag.includes(:owner_dev_builds).where(tag_type: "Owner")
       elsif @env_tag.name == 'qa'
-         @tags = Tag.includes(:owner_qa_builds)
+         @tags = Tag.includes(:owner_qa_builds).where(tag_type: "Owner")
       else
-         @tags = Tag.includes(:owner_prod_builds)
+         @tags = Tag.includes(:owner_prod_builds).where(tag_type: "Owner")
       end
       respond_to do |format|
          format.html { render template: "tags/index" }

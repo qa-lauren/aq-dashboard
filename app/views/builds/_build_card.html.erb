@@ -7,7 +7,7 @@
             <% if !build.last_duration.nil? %>
                <p><%= "#{Time.at(build.last_duration/1000).utc.strftime("%-Mmin %-Ss")}"%></p>
             <% else %>
-               <p> </p>
+               <p> N/A </p>
             <% end %>
          </li>
          <li class="list-group-item flex-build-data">
@@ -15,7 +15,7 @@
             <% if !build.ave_duration.nil? %>
                <p><%= "#{Time.at(build.ave_duration/1000).utc.strftime("%-Mmin %-Ss")}"%></p>
             <% else %>
-               <p> </p>
+               <p> N/A </p>
             <% end %>
          </li>
          <li class="list-group-item flex-build-data">
@@ -32,7 +32,7 @@
                   </p>
                <% else %>
                <p class="bold">ave. duration: </p>
-               <p> </p>
+               <p> N/A </p>
                <% end %>
          </li>
       </ul>
@@ -46,18 +46,21 @@
                   <% end %>
                </p>
                <p>
-                  HEY
+                  <p><% if !build.last_time.nil?%>
+                  <%= "#{distance_of_time_in_words(build.last_time, Time.now)} ago" %>
+                  <% end %>
+               </p>
                </p>
             </li>
 
          <% elsif build.status == 'notbuilt'%>
             <li class="list-group-item flex-build" id= "notbuilt">
                <p><%= link_to "#{test.job_url}", :target => :_blank do %>
-                  <b>not build </b>
+                  <b>not built </b>
                   <% end %>
                </p>
                <p>
-                  HEY
+                  <!-- HEY -->
                </p>
             </li>
          <% else %>

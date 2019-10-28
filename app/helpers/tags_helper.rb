@@ -72,6 +72,7 @@ def helper_tag_count_by_status(tag, env, status)
          if tag.owner_qa_builds.where(status: status).size.nil?
             return 0
          else
+            
             tag.owner_qa_builds.where(status: status).size
          end
       end
