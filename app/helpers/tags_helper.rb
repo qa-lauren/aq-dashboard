@@ -3,21 +3,45 @@ module TagsHelper
 def helper_tag_count(tag, env)
    if env == 'dev'
       if tag.tag_type == "Application"
-         tag.app_dev_builds.size
+         if tag.app_dev_builds.size.nil?
+            return 1
+         else
+            tag.app_dev_builds.size
+         end
       elsif tag.tag_type == "Owner"
-         tag.owner_dev_builds.size
+         if tag.owner_dev_builds.size.nil?
+            return 1
+         else
+            tag.owner_dev_builds.size
+         end
       end
    elsif env == 'qa'
       if tag.tag_type == "Application"
-         tag.app_qa_builds.size
+         if tag.app_qa_builds.size.nil?
+            return 1
+         else
+            tag.app_qa_builds.size
+         end
       elsif tag.tag_type == "Owner"
-         tag.owner_qa_builds.size
+         if tag.owner_qa_builds.size.nil?
+            return 1
+         else
+            tag.owner_qa_builds.size
+         end
       end
    else
       if tag.tag_type == "Application"
-         tag.app_prod_builds.size
+         if tag.app_prod_builds.size.nil?
+            return 1
+         else
+            tag.app_prod_builds.size
+         end
       elsif tag.tag_type == "Owner"
-         tag.owner_prod_builds.size
+         if tag.owner_prod_builds.size.nil?
+            return 1
+         else
+            tag.owner_prod_builds.size
+         end
       end
    end
 end
@@ -25,21 +49,45 @@ end
 def helper_tag_count_by_status(tag, env, status)
    if env == 'dev'
       if tag.tag_type == "Application"
-         return tag.app_dev_builds.where(status: status).size
+         if tag.app_dev_builds.where(status: status).size.nil?
+            return 0
+         else
+            tag.app_dev_builds.where(status: status).size
+         end
       elsif tag.tag_type == "Owner"
-         return tag.owner_dev_builds.where(status: status).size
+         if tag.owner_dev_builds.where(status: status).size.nil?
+            return 0
+         else
+            tag.app_dev_builds.where(status: status).size
+         end
       end
    elsif env == 'qa'
       if tag.tag_type == "Application"
-         return tag.app_qa_builds.where(status: status).size
+         if tag.app_qa_builds.where(status: status).size.nil?
+            return 0
+         else
+            tag.app_qa_builds.where(status: status).size
+         end
       elsif tag.tag_type == "Owner"
-         return tag.owner_qa_builds.where(status: status).size
+         if tag.owner_qa_builds.where(status: status).size.nil?
+            return 0
+         else
+            tag.owner_qa_builds.where(status: status).size
+         end
       end
    else
       if tag.tag_type == "Application"
-         return tag.app_prod_builds.where(status: status).size
+         if tag.app_prod_builds.where(status: status).size.nil?
+            return 0
+         else
+            tag.app_prod_builds.where(status: status).size
+         end
       elsif tag.tag_type == "Owner"
-         return tag.owner_prod_builds.where(status: status).size
+         if tag.owner_prod_builds.where(status: status).size.nil?
+            return 0
+         else
+            tag.owner_prod_builds.where(status: status).size
+         end
       end
    end
 end
