@@ -78,8 +78,11 @@ class Build < ApplicationRecord
 
    def jenkins_stop(job_url) #(refresh)
       url = job_url.gsub("http://ci.powerreviews.io/job/qa-tests/", "http://qabuildmonitor:fe855fdcecc278b8f7fef828fc565611@ci.powerreviews.io/job/qa-tests/")
-      token_url = "#{url}/#{id}/stop"
+      token_url = "#{url}#{id}/stop"
       puts "stop token url= #{token_url}"
+
+
+      byebug
       response = RestClient::Request.execute(
          :method => :post,
          :url =>  token_url,
