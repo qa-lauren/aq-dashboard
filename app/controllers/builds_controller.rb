@@ -30,10 +30,10 @@ class BuildsController < ApplicationController
             format.html
             format.js
          end
-         flash[:info] = "Build stopped!"
+         flash[:info] = "Build stopped!" #never see this
       rescue Exception => e
          print e
-         flash[:info] = "Build could not be/already stopped!"
+         flash[:info] = "Stop build #{@build.last_number}"
       end
    end
 
