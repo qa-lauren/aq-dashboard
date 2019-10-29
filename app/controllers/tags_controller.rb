@@ -57,28 +57,36 @@ class TagsController < ApplicationController
             elsif @tag.tag_type=="Owner"
                @builds = @tag.owner_dev_builds
             end
-            @app_names = Tag.joins(:app_dev_builds).uniq.pluck(:name)
-            @feature_names = Tag.joins(:feature_dev_builds).uniq.pluck(:name)
-            @owner_names = Tag.joins(:owner_dev_builds).uniq.pluck(:name)
+            # @app_names = Tag.joins(:app_dev_builds).uniq.pluck(:name)
+            # @feature_names = Tag.joins(:feature_dev_builds).uniq.pluck(:name)
+            # @owner_names = Tag.joins(:owner_dev_builds).uniq.pluck(:name)
          elsif @env_tag.name == 'qa'
             if @tag.tag_type=="Application"
                @builds = @tag.app_qa_builds
             elsif @tag.tag_type=="Owner"
                @builds = @tag.owner_qa_builds
             end
-            @app_names = Tag.joins(:app_qa_builds).uniq.pluck(:name)
-            @feature_names = Tag.joins(:feature_qa_builds).uniq.pluck(:name)
-            @owner_names = Tag.joins(:owner_qa_builds).uniq.pluck(:name)
+            # @app_names = Tag.joins(:app_qa_builds).uniq.pluck(:name)
+            # @feature_names = Tag.joins(:feature_qa_builds).uniq.pluck(:name)
+            # @owner_names = Tag.joins(:owner_qa_builds).uniq.pluck(:name)
          else
             if @tag.tag_type=="Application"
                @builds = @tag.app_prod_builds
             elsif @tag.tag_type=="Owner"
                @builds = @tag.owner_prod_builds
             end
-            @app_names = Tag.joins(:app_prod_builds).uniq.pluck(:name)
-            @feature_names = Tag.joins(:feature_prod_builds).uniq.pluck(:name)
-            @owner_names = Tag.joins(:owner_prod_builds).uniq.pluck(:name)
+            # @app_names = Tag.joins(:app_prod_builds).uniq.pluck(:name)
+            # @feature_names = Tag.joins(:feature_prod_builds).uniq.pluck(:name)
+            # @owner_names = Tag.joins(:owner_prod_builds).uniq.pluck(:name)
          end
+         test_ids = @builds.pluck(:test_id).uniq
+         tests = Test.where(id: test_ids)
+         ids = tests.pluck(:feature_tag_id).uniq
+         @feature_names = Tag.where(id: ids).pluck(:name) if Tag.where(id: ids).pluck(:name)
+         ids = tests.pluck(:app_tag_id).uniq
+         @app_names = Tag.where(id: ids).pluck(:name) if Tag.where(id: ids).pluck(:name)
+         ids = tests.pluck(:owner_tag_id).uniq
+         @owner_names = Tag.where(id: ids).pluck(:name) if Tag.where(id: ids).pluck(:name)
    end
 
    def create
