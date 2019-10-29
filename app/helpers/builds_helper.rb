@@ -20,13 +20,13 @@ module BuildsHelper
    def show_build_status(test, env_tag)
       if !build.nil?
          if build.status=='progress'
-            return "progress"
+            return "in-progress"
          else
             if build.status==''
                return "notbuilt"
             else
                if build.status=='progress'
-                  return "progress"
+                  return "in-progress"
                else
                   return build.status
                end
