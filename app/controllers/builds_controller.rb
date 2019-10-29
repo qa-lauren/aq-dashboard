@@ -23,16 +23,17 @@ class BuildsController < ApplicationController
 
    def jenkins_stop
       begin
-         test = Test.where(id: test_id).pluck(:job_url)
+         test = Test.where(id: @build.test_id).first
          @build.jenkins_stop(test.job_url)
-         @build.jenkins_refresh(@env_tag)
+         @build.reload
          respond_to do |format|
-            format.html { render "build" }
+            format.html
             format.js
          end
          flash[:info] = "Build stopped!"
       rescue Exception => e
          print e
+         flash[:info] = "Build could not be/already stopped!"
       end
    end
 
