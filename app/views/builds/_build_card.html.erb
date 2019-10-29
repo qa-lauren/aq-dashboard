@@ -40,7 +40,7 @@
    <div class="test-data">
       <ul class="list-inline list-inline-horizontal">
          <% if build.status == 'progress'%>
-            <li class="list-group-item flex-build" id= "in-progress">
+            <li class="list-group-item flex-build" id= "progress">
                <p><%= link_to "#{test.job_url}#{build.last_number}/console", :target => :_blank do %>
                   <b>in progress </b><%="#{build.last_number}" %>
                   <% end %>
