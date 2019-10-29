@@ -8,14 +8,13 @@
                <%=@env_tag.name.upcase%> / <%=@tag.tag_type%> / <%= @tag.name %>
             <% end %>
          </h2>
-         <% if !@tag.nil?%>
          <h2 class="tests-count">
-            <span class="icon-green">
-               <%=helper_tag_count_by_status(@tag, @env_tag.name, "success") %>
-            </span>
-            /<%=helper_tag_count(@tag, @env_tag.name) %>
+            <% if @tag.nil?%>
+               <span class="icon-green"><%=all_success_tests_count(@env_tag)%></span>/<%=all_tests_count(@env_tag)%>
+            <% else %>
+               <span class="icon-green"><%=tag_tests_count(@tag,@env_tag, "success")%></span>/<%=tag_tests_total_count(@tag, @env_tag)%>
+            <% end %>
          </h2>
-         <% end %>
       </div>
       <div class="filters">
          <div class="ui-group">
@@ -28,6 +27,8 @@
                <button class="button" id="failure" data-filter=".failure">True Failure</button>
             </div>
          </div>
+         <%if @tag.nil? %>
+         <% if @app_names.count >1 %>
          <div class="ui-group">
             <h3>Application: </h3>
             <div class="button-group js-radio-button-group" data-filter-group="app">
@@ -37,6 +38,8 @@
                <%end%>
             </div>
             </div>
+         <%end%>
+         <% if @feature_names.count > 1 %>
             <div class="ui-group">
                <h3>Feature: </h3>
                <div class="button-group js-radio-button-group" data-filter-group="feature">
@@ -46,6 +49,8 @@
                   <%end%>
                </div>
             </div>
+         <%end%>
+         <% if @owner_names.count >1 %>
          <div class="ui-group">
             <h3>Owner: </h3>
             <div class="button-group js-radio-button-group" data-filter-group="owner">
@@ -55,6 +60,52 @@
                <%end%>
             </div>
          </div>
+         <%end%>
+         <% elsif @tag.tag_type == "Application"%>
+            <% if @feature_names.count > 1 %>
+               <div class="ui-group">
+                  <h3>Feature: </h3>
+                  <div class="button-group js-radio-button-group" data-filter-group="feature">
+                     <button class="button is-checked" data-filter="">ALL</button>
+                     <%@feature_names.each do |tag|%>
+                        <button class="button" id="feature" data-filter=".<%=tag.downcase.gsub(/[[:space:]]/, '')%>"><%=tag%></button>
+                     <%end%>
+                  </div>
+               </div>
+            <%end%>
+            <% if @owner_names.count >1 %>
+            <div class="ui-group">
+               <h3>Owner: </h3>
+               <div class="button-group js-radio-button-group" data-filter-group="owner">
+                  <button class="button is-checked" data-filter="">ALL</button>
+                  <%@owner_names.each do |tag|%>
+                     <button class="button" id="owner" data-filter=".<%=tag.downcase.gsub(/[[:space:]]/, '')%>"><%=tag%></button>
+                  <%end%>
+               </div>
+            </div>
+            <%end%>
+            <%elsif @tag.tag_type == "Owner"%>
+               <% if @app_names.count >1 %>
+               <div class="ui-group">
+                  <h3>Application: </h3>
+                  <div class="button-group js-radio-button-group" data-filter-group="app">
+                     <button class="button is-checked" data-filter="">ALL</button>
+                     <%@app_names.each do |tag|%>
+                        <button class="button" id="app" data-filter=".<%=tag.downcase.gsub(/[[:space:]]/, '')%>"><%=tag%></button>
+                     <%end%>
+                  </div>
+                  </div>
+                  <div class="ui-group">
+                     <h3>Feature: </h3>
+                     <div class="button-group js-radio-button-group" data-filter-group="feature">
+                        <button class="button is-checked" data-filter="">ALL</button>
+                        <%@feature_names.each do |tag|%>
+                           <button class="button" id="feature" data-filter=".<%=tag.downcase.gsub(/[[:space:]]/, '')%>"><%=tag%></button>
+                        <%end%>
+                     </div>
+                  </div>
+               <%end%>
+            <%end%>
       </div>
    </article>
 </div>
