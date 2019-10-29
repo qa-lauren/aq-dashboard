@@ -1,47 +1,9 @@
-
-<% if helper_tag_count(tag, @env_tag.name).nil? %>
-<% total_count = 1 %>
-<% else %>
 <% total_count = helper_tag_count(tag, @env_tag.name) %>
-<% end %>
-
-<% if helper_tag_count_by_status(tag, @env_tag.name, "success") %>
-<% success_count = 0 %>
-<% else %>
 <% success_count = helper_tag_count_by_status(tag, @env_tag.name, "success") %>
-<% end %>
-
-<% if helper_tag_count_by_status(tag, @env_tag.name, "failure-orange") %>
-<% failure_orange_count = 0 %>
-
-<% else %>
 <% failure_orange_count = helper_tag_count_by_status(tag, @env_tag.name, "failure-orange") %>
-
-<% end %>
-
-<% if helper_tag_count_by_status(tag, @env_tag.name, "failure") %>
-<% failure_count = 0 %>
-
-<% else %>
 <% failure_count = helper_tag_count_by_status(tag, @env_tag.name, "failure") %>
-
-<% end %>
-
-<% if helper_tag_count_by_status(tag, @env_tag.name, "progress") %>
-<% progress_count = 0 %>
-
-<% else %>
 <% progress_count = helper_tag_count_by_status(tag, @env_tag.name, "progress") %>
-
-<% end %>
-
-<% if helper_tag_count_by_status(tag, @env_tag.name, "aborted") %>
-<% aborted_count = 0%>
-
-<% else %>
-<% aborted_count = helper_tag_count_by_status(tag, @env_tag.name, "aborted") %>
-<% end %>
-
+<% aborted_count = helper_tag_count_by_status(tag, @env_tag.name, "aborted")%>
 
 
 <div class="card" id="display-card-<%=tag.id%>">
