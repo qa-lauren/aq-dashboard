@@ -26,6 +26,7 @@ class BuildsController < ApplicationController
          test = Test.where(id: @build.test_id).first
          @build.jenkins_stop(test.job_url)
          @build.reload
+         @build.jenkins_refresh
          respond_to do |format|
             format.html
             format.js
