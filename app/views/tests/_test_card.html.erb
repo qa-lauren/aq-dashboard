@@ -46,7 +46,7 @@
          <% if build.status == 'progress' %>
             <span class="jenkins-action" id="jenkins-stop-<%=build.id%>">
                <%= link_to (jenkins_stop_build_path(build.id)), :remote=>true do %>
-                  <i class="icon ion-md-remove-circle custom-icon-construct">stop</i>
+                  <i class="icon ion-md-remove-circle custom-icon-construct"></i>
                <% end %>
             </span>
          <% end %>
