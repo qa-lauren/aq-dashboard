@@ -3,13 +3,13 @@ module TagsHelper
 def helper_tag_count(tag, env)
    if env == 'dev'
       if tag.tag_type == "Application"
-         if tag.app_dev_builds.size.nil?
+         if tag.app_dev_builds.nil?
             return 1
          else
             tag.app_dev_builds.size
          end
       elsif tag.tag_type == "Owner"
-         if tag.owner_dev_builds.size.nil?
+         if tag.owner_dev_builds.nil?
             return 1
          else
             tag.owner_dev_builds.size
@@ -17,13 +17,13 @@ def helper_tag_count(tag, env)
       end
    elsif env == 'qa'
       if tag.tag_type == "Application"
-         if tag.app_qa_builds.size.nil?
+         if tag.app_qa_builds.nil?
             return 1
          else
             tag.app_qa_builds.size
          end
       elsif tag.tag_type == "Owner"
-         if tag.owner_qa_builds.size.nil?
+         if tag.owner_qa_builds.nil?
             return 1
          else
             tag.owner_qa_builds.size
@@ -31,13 +31,13 @@ def helper_tag_count(tag, env)
       end
    else
       if tag.tag_type == "Application"
-         if tag.app_prod_builds.size.nil?
+         if tag.app_prod_builds.nil?
             return 1
          else
             tag.app_prod_builds.size
          end
       elsif tag.tag_type == "Owner"
-         if tag.owner_prod_builds.size.nil?
+         if tag.owner_prod_builds.nil?
             return 1
          else
             tag.owner_prod_builds.size
@@ -49,13 +49,13 @@ end
 def helper_tag_count_by_status(tag, env, status)
    if env == 'dev'
       if tag.tag_type == "Application"
-         if tag.app_dev_builds.where(status: status).size.nil?
+         if tag.app_dev_builds.where(status: status).nil?
             0
          else
             tag.app_dev_builds.where(status: status).size
          end
       elsif tag.tag_type == "Owner"
-         if tag.owner_dev_builds.where(status: status).size.nil?
+         if tag.owner_dev_builds.where(status: status).nil?
             0
          else
             tag.owner_dev_builds.where(status: status).size
@@ -63,28 +63,27 @@ def helper_tag_count_by_status(tag, env, status)
       end
    elsif env == 'qa'
       if tag.tag_type == "Application"
-         if tag.app_qa_builds.where(status: status).size.nil?
+         if tag.app_qa_builds.where(status: status).nil?
             0
          else
             tag.app_qa_builds.where(status: status).size
          end
       elsif tag.tag_type == "Owner"
-         if tag.owner_qa_builds.where(status: status).size.nil?
+         if tag.owner_qa_builds.where(status: status).nil?
             0
          else
-            
             tag.owner_qa_builds.where(status: status).size
          end
       end
    else
       if tag.tag_type == "Application"
-         if tag.app_prod_builds.where(status: status).size.nil?
+         if tag.app_prod_builds.where(status: status).nil?
             0
          else
             tag.app_prod_builds.where(status: status).size
          end
       elsif tag.tag_type == "Owner"
-         if tag.owner_prod_builds.where(status: status).size.nil?
+         if tag.owner_prod_builds.where(status: status).nil?
             s0
          else
             tag.owner_prod_builds.where(status: status).size

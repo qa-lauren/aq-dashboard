@@ -1,6 +1,6 @@
 <% test = Test.where(id: build.test_id).first%>
-
-<div class="card color-shape test-container-<%=test.id%> <%=build_tag_name(test, "Application")%> <%=build_tag_name(test, "Feature")%> <%=build_tag_name(test, "Owner")%> <%=build.status%>">
+<% if !test.nil? %>
+<div class="card color-shape test-container-<%=Test.where(id: build.test_id).first.id%> <%=build_tag_name(test, "Application")%> <%=build_tag_name(test, "Feature")%> <%=build_tag_name(test, "Owner")%> <%=build.status%>">
 
    <div class="card-header" id= "<%=(@env_tag.name)%>">
       <%= link_to test.job_url, class: "link-title", target: :_blank do %>
@@ -74,3 +74,4 @@
    });
    </script>
 </div>
+<% end %>
