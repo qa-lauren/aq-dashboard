@@ -8,7 +8,7 @@ module BuildsHelper
          return test.owner_tag.name if test.owner_tag
       end
    end
-   
+
    def build_tag_name(build, tag_type)
       if !build_tag(build, tag_type).nil?
          build_tag(build, tag_type).downcase.gsub(/[[:space:]]/, '')
@@ -20,13 +20,13 @@ module BuildsHelper
    def show_build_status(test, env_tag)
       if !build.nil?
          if build.status=='progress'
-            return "in-progress"
+            return "progress"
          else
             if build.status==''
                return "notbuilt"
             else
                if build.status=='progress'
-                  return "in-progress"
+                  return "progress"
                else
                   return build.status
                end
