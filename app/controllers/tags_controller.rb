@@ -16,7 +16,7 @@ class TagsController < ApplicationController
          # @tags = Tag.includes(:app_qa_builds).where(tag_type: "Application")
 
       else
-         # @tags = Tag.joins(:app_prod_builds).uniq
+         @tags = Tag.joins(:app_prod_builds).uniq
          # @tags = Tag.includes(:app_prod_builds).where(tag_type: "Application")
 
       end
@@ -25,11 +25,11 @@ class TagsController < ApplicationController
    def owner
       @tag_title="Owners"
       if @env_tag.name == 'dev'
-         @tags = Tag.includes(:owner_dev_builds).where(tag_type: "Owner")
+         @tags = Tag.joins(:owner_dev_builds).uniq
       elsif @env_tag.name == 'qa'
-         @tags = Tag.includes(:owner_qa_builds).where(tag_type: "Owner")
+         @tags = Tag.joins(:owner_qa_builds).uniq
       else
-         @tags = Tag.includes(:owner_prod_builds).where(tag_type: "Owner")
+         @tags = Tag.joins(:owner_prod_builds).uniq
       end
       respond_to do |format|
          format.html { render template: "tags/index" }
