@@ -67,39 +67,21 @@
             <li class="nav-item">
                <%= link_to "Edit Tags", edit_tags_path,  { :class=>"nav-link" }  %>
             </li>
-            <li class="nav-item dropdown">
-               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Environment: <b><%= @env_tag.name %></b>
-               </a>
-               <div class="dropdown-menu pull-right" aria-labelledby="navbarDropdown">
-                  <% EnvironmentTag.all.select { |env_tag| env_tag != @env_tag }.each do | env_tag | %>
-                  <a><%= link_to env_tag.name, change_env_path(id: env_tag, stop_rotate: true), {:class=> "dropdown-item"} %></a>
-                  <% end %>
-               </div>
-            </li>
-            <li class="nav-item dropdown">
-               <a class="nav-link dropdown-toggle" id="rotate-env" href="#"role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Rotate: <b><%= session[:rotate] %></b>
-               </a>
-               <div class="dropdown-menu pull-right" id="rotate-env-li" aria-labelledby="navbarDropdown">
-                  <a><%= link_to "turn #{ session[:rotate] == true ? "off" : "on" } rotation", toggle_rotate_path, {:class=> "dropdown-item", :id=> "rotate-box", :remote=>true}%></a>
-               </div>
-            </li>
          </ul>
          <% else %>
-         <% if controller.action_name == "edit" %>
-         <ul class="navbar-nav ml-auto nav-flex-icons">
-            <li class="nav-item">
-               <%= link_to "Edit Tests", tests_path,  { :class=>"nav-link" }  %>
-            </li>
-         </ul>
-         <% else %>
-         <ul class="navbar-nav ml-auto nav-flex-icons">
-            <li class="nav-item">
-               <%= link_to "Settings", tests_path,  { :class=>"nav-link" }  %>
-            </li>
-         </ul>
-         <% end %>
+            <% if controller.action_name == "edit" %>
+            <ul class="navbar-nav ml-auto nav-flex-icons">
+               <li class="nav-item">
+                  <%= link_to "Edit Tests", tests_path,  { :class=>"nav-link" }  %>
+               </li>
+            </ul>
+            <% else %>
+            <ul class="navbar-nav ml-auto nav-flex-icons">
+               <li class="nav-item">
+                  <%= link_to "Settings", tests_path,  { :class=>"nav-link" }  %>
+               </li>
+            </ul>
+            <% end %>
          <% end %>
       </div>
    </nav>

@@ -72,9 +72,9 @@
 # Build.jenkins_update_all_tests
 
 
-# Test.where("name like 'Cloud%'").each do |test|
-#    a = Tag.find_by name: "Log Delivery"
-#    a.app_tests << test
-#    f = Tag.find_by name: "Friel"
-#    f.owner_tests << test
-# end
+Test.where("name like 'D4%'").each do |test|
+   a = Tag.find_by name: "UI - Display 4"
+   a.app_tests << test
+   # f = Tag.find_by name: "Friel"
+   # f.owner_tests << test
+end
