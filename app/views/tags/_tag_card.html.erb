@@ -1,10 +1,47 @@
 
+<% if helper_tag_count(tag, @env_tag.name).nil? %>
+<% total_count = 1 %>
+<% else %>
 <% total_count = helper_tag_count(tag, @env_tag.name) %>
+<% end %>
+
+<% if helper_tag_count_by_status(tag, @env_tag.name, "success") %>
+<% success_count = 0 %>
+<% else %>
 <% success_count = helper_tag_count_by_status(tag, @env_tag.name, "success") %>
+<% end %>
+
+<% if helper_tag_count_by_status(tag, @env_tag.name, "failure-orange") %>
+<% failure_orange_count = 0 %>
+
+<% else %>
 <% failure_orange_count = helper_tag_count_by_status(tag, @env_tag.name, "failure-orange") %>
+
+<% end %>
+
+<% if helper_tag_count_by_status(tag, @env_tag.name, "failure") %>
+<% failure_count = 0 %>
+
+<% else %>
 <% failure_count = helper_tag_count_by_status(tag, @env_tag.name, "failure") %>
-<% aborted_count = helper_tag_count_by_status(tag, @env_tag.name, "aborted") %>
+
+<% end %>
+
+<% if helper_tag_count_by_status(tag, @env_tag.name, "progress") %>
+<% progress_count = 0 %>
+
+<% else %>
 <% progress_count = helper_tag_count_by_status(tag, @env_tag.name, "progress") %>
+
+<% end %>
+
+<% if helper_tag_count_by_status(tag, @env_tag.name, "aborted") %>
+<% aborted_count = 0%>
+
+<% else %>
+<% aborted_count = helper_tag_count_by_status(tag, @env_tag.name, "aborted") %>
+<% end %>
+
 
 
 <div class="card" id="display-card-<%=tag.id%>">
@@ -24,18 +61,24 @@
             <li class="list-group-item tag-data-box">
                <h3>
                   <span>
+<% if !success_count.nil? %>
+
                      <% if success_count/total_count.to_f*100 >75.0 %>
                         <i class="icon ion-md-checkmark-circle icon-green"></i>
                      <% else %>
                         <i class="icon ion-md-close-circle icon-red"></i>
                      <% end %>
+
                   </span>
                   <%=number_to_percentage(success_count/total_count.to_f*100,precision:0)%>
+                     <% end %>
                </h3>
             </li>
          </ul>
       </div>
       <div class="progress-container">
+         <% if !success_count.nil? %>
+
          <% if total_count > 0 %>
             <div class="progress" id ="progress-show-<%=tag.id%>">
                   <div class="progress-bar" id="success" style="width: <%=success_count/total_count.to_f*100.0 %>%"></div>
@@ -48,6 +91,7 @@
             <div class="progress">
                <div class="progress-bar other" style="width: 100%"></div>
             </div>
+         <% end %>
          <% end %>
       </div>
    </div>

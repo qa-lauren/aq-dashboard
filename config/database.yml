@@ -22,8 +22,19 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
-  <<: *default
-  database: aq_dashboard_development
+  # <<: *default
+  # database: aq_dashboard_development
+  adapter: postgresql
+  encoding: unicode
+  database: qa_tests
+  username: app
+  password: K0bg8v4TvLdWae8dio9FniCWo
+  host: multi.qa.rds.us-west-2.pwr
+  port: 5432
+  encoding: utf8
+  # For details on connection pooling, see Rails configuration guide
+  # http://guides.rubyonrails.org/configuring.html#database-pooling
+  pool: 25
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
   # When left blank, postgres will use the default role. This is
