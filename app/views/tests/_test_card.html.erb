@@ -16,7 +16,7 @@
    </div>
 
    <p align="left" class="edit-test-settings" id="note-<%=test.id%>">
-   <%= react_component 'Notes', { notes: build.notes, build: build }, { class: "notes-notes" } %>
+      <%= react_component 'Notes', { notes: build.notes, build: build }, { class: "notes-notes" } %>
    </p>
 <p align="right" class="edit-test-settings" id="edit-test-<%=test.id%>">
    <%= link_to (edit_test_path(test.id)), :remote => true do %>
@@ -64,7 +64,7 @@
 <% end %>
 
 <script>
-$(".#test-container-<%=test.id%>").hover(function() {
+$(".test-container-<%=test.id%>").hover(function() {
    $("#edit-test-<%=test.id%>").show();
    $("#jenkins-start<%=test.id%>").show();
    $("#jenkins-refresh<%=build.id%>").show();

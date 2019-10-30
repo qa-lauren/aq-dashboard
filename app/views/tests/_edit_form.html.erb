@@ -1,0 +1,20 @@
+<div class="edit-test-modal-backdrop">
+   <div class="test-modal">
+      <div class="test-modal-body">
+         <h5><%=test.name%></h5>
+         <%= form_for test do |f| %>
+               <label for="app">Application Tag</label>
+               <%= f.select :app_tag, options_for_select(app_tags, default_app(test)), {}, { class: 'form-control' } %>
+               <label for="feature">Feature Tag</label>
+               <%= f.select :feature_tag, options_for_select(feature_tags, default_feature(test)), {}, { class: 'form-control' } %>
+               <label for="owner">Filter Tag</label>
+               <%= f.select :owner_tag, options_for_select(owner_tags, default_owner(test)), {}, { class: 'form-control' } %>
+         <%= f.hidden_field :modal, value: true %>
+         <div class="test-modal-buttons">
+            <a href="#" class="btn btn-default btn-sm test-modal-button" id="close-test-modal">Cancel</a>
+            <%= f.submit "Update", class: "btn btn-primary btn-sm test-modal-button" %>
+         </div>
+         <% end %>
+      </div>
+   </div>
+</div>
