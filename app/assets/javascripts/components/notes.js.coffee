@@ -44,10 +44,13 @@
 
   render: ->
     React.DOM.div { onMouseDown: @handleMouseDown, onMouseUp: @handleMouseUp },
-      React.DOM.a { className: "icon ion-md-list-box custom-icon-list", onClick: @toggleNotes },
-        ""
-        if @state.notes.length
-          React.DOM.span { className: "badge", id:"active-badge"}, @state.notes.length
+      if @state.notes.length
+         React.DOM.a { className: "icon ion-md-list-box custom-icon-list", onClick: @toggleNotes },
+            ""
+            React.DOM.span { className: "badge", id:"active-badge"}, @state.notes.length
+      else
+         React.DOM.a { className: "icon ion-md-list-box custom-icon-list no-display", onClick: @toggleNotes },
+            ""
 
       if @state.show
         @notesList()

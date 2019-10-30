@@ -31,6 +31,19 @@
 
 .card {
    padding:4px;
+
+}
+
+.card:hover {
+   > div {
+      > p {
+         > span {
+            > a {
+               color: orange !important;
+            }
+         }
+      }
+   }
 }
 
 .progress {
