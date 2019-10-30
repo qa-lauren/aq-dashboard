@@ -91,50 +91,5 @@
          <% end %>
       </ul>
    </div>
-   <div class="test-footer panel-footer" id= "<%=(@env_tag.name)%>">
-      <% if !test.app_tag.nil? %>
-         <span class="badge badge-primary"><%= test.app_tag.name %></span>
-      <% end %>
-      <% if !test.feature_tag.nil? %>
-         <span class="badge badge-info"><%= test.feature_tag.name %></span>
-      <% end %>
-      <% if !test.owner_tag.nil? %>
-         <span class="badge badge-info"><%= test.owner_tag.name %></span>
-      <% end %>
-      <p class="action-buttons">
-         <% if build.status == 'progress' %>
-            <span class="jenkins-action" id="jenkins-stop-<%=build.id%>">
-               <%= link_to (jenkins_stop_build_path(build.id)), :remote=>true do %>
-                  <i class="icon ion-md-remove-circle custom-icon-construct"></i>
-               <% end %>
-            </span>
-         <% end %>
-         <span class="jenkins-action" id="jenkins-start-<%=test.id%>">
-            <%= link_to (jenkins_build_test_path(test.id)), :remote=>true do %>
-               <i class="icon ion-md-construct custom-icon-construct"></i>
-            <% end %>
-         </span>
-         <span class="jenkins-action" id="jenkins-refresh-<%=build.id%>">
-            <%= link_to (jenkins_refresh_build_path(build.id)), :remote=>true do %>
-               <i class="icon ion-md-refresh-circle custom-icon-refresh-circle"></i>
-            <% end %>
-         </span>
-      </p>
-   </div>
-</div>
 
-<script>
-$(".build-card-<%=build.id%>").hover(function() {
-   $("#edit-test-<%=test.id%>").show();
-   $("#jenkins-start<%=test.id%>").show();
-   $("#jenkins-refresh<%=build.id%>").show();
-   $("#jenkins-stop<%=build.id%>").show();
-   $("#note-<%=build.test_id%>").show();
-}, function() {
-   $("#edit-test-<%=test.id%>").hide();
-   $("#jenkins-start<%=test.id%>").hide();
-   $("#jenkins-refresh<%=build.id%>").hide();
-   $("#jenkins-stop<%=build.id%>").hide();
-   $("#note-<%=build.test_id%>").hide();
-});
-</script>
+</div>
