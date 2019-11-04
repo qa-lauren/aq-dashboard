@@ -1,7 +1,7 @@
 require 'rufus-scheduler'
 
 scheduler = Rufus::Scheduler::singleton(:max_work_threads => 1)
-scheduler.every '3m', :allow_overlapping => false, :timeout => '2m', :first => :now do
+scheduler.every '2m', :allow_overlapping => false, :timeout => '30s', :first => :now do
 
 	if ENV['RAILS_ENV'] == 'production'
 		begin

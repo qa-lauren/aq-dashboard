@@ -289,6 +289,7 @@ puts "=========build params"
 
    def self.jenkins_update_param_tests(env)
       jobs_json = get_jenkins_jobs_json('param')
+
       jobs_json.each do |job|
          puts  "#{env.upcase} ================ #{job["name"]}"
          if !Test.where(name: job["name"]).first.nil?
@@ -300,23 +301,28 @@ puts "=========build params"
          end
 
          puts "Now update! #{test.name}"
+         begin
          jenkins_update_param_build(env, test)
-         puts  "==================== #{test.name}"
-      end
-
-      jobs_json.each do |job|
-         puts  "#{env.upcase} ================ #{job["name"]}"
-         if !Test.where(name: job["name"]).first.nil?
-            test = Test.where(name: job["name"]).first
-         else
-            test = Test.create(name: job["name"], job_url: job["url"], parameterized: true)
-            test.save
-            test.reload
+         rescue
+            puts "TIME OUT. Next"
+            next
          end
-         jenkins_update_param_build(env, test)
          puts  "==================== #{test.name}"
-
       end
+      #
+      # jobs_json.each do |job|
+      #    puts  "#{env.upcase} ================ #{job["name"]}"
+      #    if !Test.where(name: job["name"]).first.nil?
+      #       test = Test.where(name: job["name"]).first
+      #    else
+      #       test = Test.create(name: job["name"], job_url: job["url"], parameterized: true)
+      #       test.save
+      #       test.reload
+      #    end
+      #    jenkins_update_param_build(env, test)
+      #    puts  "==================== #{test.name}"
+      #
+      # end
    end
 
    def self.jenkins_update_all_tests
