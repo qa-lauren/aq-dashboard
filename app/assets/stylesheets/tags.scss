@@ -31,15 +31,22 @@
 
 .card {
    padding:4px;
+   .no-display {
+      display: none;
+   }
 
 }
 
 .card:hover {
+
+   .notes-notes {
+      color: #007bf !important;
+   }
    > div {
       > p {
          > span {
             > a {
-               color: orange !important;
+               color: #007bf !important;
             }
          }
       }

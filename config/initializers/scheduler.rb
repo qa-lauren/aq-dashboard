@@ -13,6 +13,7 @@ scheduler.every '2m', :allow_overlapping => false, :timeout => '2m', :first => :
 		rescue Rufus::Scheduler::TimeoutError
 		  # ... that something got interrupted after 1 day
 		  puts "TIME OUT"
+		  scheduler = Rufus::Scheduler::singleton(:max_work_threads => 1)
 		end
 	end
 

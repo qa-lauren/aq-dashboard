@@ -80,7 +80,7 @@
 }
 
 .hide-notes {
-   display: none;
+   // display: none;
    position: absolute;
    top: 1px;
    left: 6px;
@@ -103,11 +103,11 @@
 }
 .custom-icon-list {
    font-size: 10px;
-   color:#007bff !important;
+   color:transparent !important;
    padding-right:8px;
    padding-bottom: 3px;
-   opacity: 0.8;
 }
+
 
 #active-badge {
    position:absolute;
@@ -120,28 +120,7 @@
    background-color: #FFA500 !important;
 }
 
-.refresh-refresh {
-   // z-index: 2000;
 
-}
-
-.jenkins-action {
-   // display:none;
-   // z-index: 2000;
-}
-
-.build-build {
-   // display:none;
-   // opacity: 0.8;
-   // position: absolute;
-   // right: 7px;
-   // z-index: 2000;
-   // bottom: -5px;
-   // > p {
-   //    line-height: 18px;
-
-   // }
-}
 .action-buttons {
    opacity: 0.8;
    position: absolute;
@@ -151,9 +130,7 @@
 
 }
 
-.hide-display {
-   display: none;
-}
+
 .build-data {
    border-right: 1px solid rgba(0,0,0,.125) !important;
    border-left: 1px solid rgba(0,0,0,.125) !important;

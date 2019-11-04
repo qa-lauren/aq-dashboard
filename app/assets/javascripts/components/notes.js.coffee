@@ -49,7 +49,7 @@
             ""
             React.DOM.span { className: "badge", id:"active-badge"}, @state.notes.length
       else
-         React.DOM.a { className: "icon ion-md-list-box custom-icon-list no-display", onClick: @toggleNotes },
+         React.DOM.a { className: "icon ion-md-list-box custom-icon-list", onClick: @toggleNotes },
             ""
 
       if @state.show
