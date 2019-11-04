@@ -300,14 +300,15 @@ puts "=========build params"
             test.reload
          end
 
-         puts "Now update! #{test.name}"
+         # puts "Now update! #{test.name}"
          begin
          jenkins_update_param_build(env, test)
          rescue
-            puts "TIME OUT. Next"
+            puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! TIME OUT: #{test.name}"
+            puts "NEXT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
             next
          end
-         puts  "==================== #{test.name}"
+         puts  "============================================================================================================"
       end
       #
       # jobs_json.each do |job|
