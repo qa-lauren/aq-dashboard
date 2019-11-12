@@ -1,0 +1,15 @@
+current directory: /Users/laurenjin/Desktop/aq-dashboard/vendor/bundle/ruby/2.6.0/gems/bootsnap-1.4.5/ext/bootsnap
+/Users/laurenjin/.rvm/rubies/ruby-2.6.3/bin/ruby -I /Users/laurenjin/.rvm/rubies/ruby-2.6.3/lib/ruby/site_ruby/2.6.0 -r ./siteconf20191111-47009-1qntr2q.rb extconf.rb
+creating Makefile
+
+current directory: /Users/laurenjin/Desktop/aq-dashboard/vendor/bundle/ruby/2.6.0/gems/bootsnap-1.4.5/ext/bootsnap
+make "DESTDIR=" clean
+
+current directory: /Users/laurenjin/Desktop/aq-dashboard/vendor/bundle/ruby/2.6.0/gems/bootsnap-1.4.5/ext/bootsnap
+make "DESTDIR="
+compiling bootsnap.c
+linking shared-object bootsnap/bootsnap.bundle
+
+current directory: /Users/laurenjin/Desktop/aq-dashboard/vendor/bundle/ruby/2.6.0/gems/bootsnap-1.4.5/ext/bootsnap
+make "DESTDIR=" install
+/usr/local/opt/coreutils/bin/ginstall -c -m 0755 bootsnap.bundle ./.gem.20191111-47009-1y9zoqj/bootsnap

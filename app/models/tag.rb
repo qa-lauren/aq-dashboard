@@ -5,17 +5,17 @@ class Tag < ApplicationRecord
    has_many :feature_tests, class_name: "Test", foreign_key: "feature_tag_id"
    has_many :owner_tests, class_name: "Test", foreign_key: "owner_tag_id"
 
-   has_many :app_dev_builds, :through => :app_tests, source: :dev_build
-   has_many :app_qa_builds, :through => :app_tests, source: :qa_build
-   has_many :app_prod_builds, :through => :app_tests, source: :prod_build
+   has_many :app_dev_builds, -> { order(:name) },:through => :app_tests, source: :dev_build
+   has_many :app_qa_builds, -> { order(:name) },:through => :app_tests, source: :qa_build
+   has_many :app_prod_builds, -> { order(:name) },:through => :app_tests, source: :prod_build
 
-   has_many :feature_dev_builds, :through => :feature_tests, source: :dev_build
-   has_many :feature_qa_builds, :through => :feature_tests, source: :qa_build
-   has_many :feature_prod_builds, :through => :feature_tests, source: :prod_build
+   has_many :feature_dev_builds,-> { order(:name) }, :through => :feature_tests, source: :dev_build
+   has_many :feature_qa_builds,-> { order(:name) }, :through => :feature_tests, source: :qa_build
+   has_many :feature_prod_builds, -> { order(:name) },:through => :feature_tests, source: :prod_build
 
-   has_many :owner_dev_builds, :through => :owner_tests, source: :dev_build
-   has_many :owner_qa_builds, :through => :owner_tests, source: :qa_build
-   has_many :owner_prod_builds, :through => :owner_tests, source: :prod_build
+   has_many :owner_dev_builds,-> { order(:name) }, :through => :owner_tests, source: :dev_build
+   has_many :owner_qa_builds,-> { order(:name) }, :through => :owner_tests, source: :qa_build
+   has_many :owner_prod_builds, -> { order(:name) },:through => :owner_tests, source: :prod_build
 
    def self.find_by_name(app_name)
       exists?(name: app_name) ? where(name: app_name).first : create(name: app_name)

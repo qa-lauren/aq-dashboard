@@ -1,0 +1,15 @@
+current directory: /Users/laurenjin/Desktop/aq-dashboard/vendor/bundle/ruby/2.6.0/gems/websocket-driver-0.7.1/ext/websocket-driver
+/Users/laurenjin/.rvm/rubies/ruby-2.6.3/bin/ruby -I /Users/laurenjin/.rvm/rubies/ruby-2.6.3/lib/ruby/site_ruby/2.6.0 -r ./siteconf20191111-47009-qr2462.rb extconf.rb
+creating Makefile
+
+current directory: /Users/laurenjin/Desktop/aq-dashboard/vendor/bundle/ruby/2.6.0/gems/websocket-driver-0.7.1/ext/websocket-driver
+make "DESTDIR=" clean
+
+current directory: /Users/laurenjin/Desktop/aq-dashboard/vendor/bundle/ruby/2.6.0/gems/websocket-driver-0.7.1/ext/websocket-driver
+make "DESTDIR="
+compiling websocket_mask.c
+linking shared-object websocket_mask.bundle
+
+current directory: /Users/laurenjin/Desktop/aq-dashboard/vendor/bundle/ruby/2.6.0/gems/websocket-driver-0.7.1/ext/websocket-driver
+make "DESTDIR=" install
+/usr/local/opt/coreutils/bin/ginstall -c -m 0755 websocket_mask.bundle ./.gem.20191111-47009-1isq9m2

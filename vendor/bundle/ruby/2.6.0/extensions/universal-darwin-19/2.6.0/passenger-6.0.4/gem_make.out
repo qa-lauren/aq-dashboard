@@ -1,0 +1,22 @@
+current directory: /Users/laurenjin/Desktop/aq-dashboard/vendor/bundle/ruby/2.6.0/gems/passenger-6.0.4/src/helper-scripts/download_binaries
+/System/Library/Frameworks/Ruby.framework/Versions/2.6/usr/bin/ruby -I /System/Library/Frameworks/Ruby.framework/Versions/2.6/usr/lib/ruby/2.6.0 -r ./siteconf20191111-29348-14e0f8l.rb extconf.rb
+Attempting to download https://github.com/phusion/passenger/releases/download/release-6.0.4/rubyext-ruby-2.6.3-universal-macosx.tar.gz into /Users/laurenjin/Desktop/aq-dashboard/vendor/bundle/ruby/2.6.0/gems/passenger-6.0.4/download_cache
+*** Could not download https://github.com/phusion/passenger/releases/download/release-6.0.4/rubyext-ruby-2.6.3-universal-macosx.tar.gz: The requested URL returned error: 404 Not Found
+Attempting to download https://oss-binaries.phusionpassenger.com/binaries/passenger/by_release/6.0.4/rubyext-ruby-2.6.3-universal-macosx.tar.gz into /Users/laurenjin/Desktop/aq-dashboard/vendor/bundle/ruby/2.6.0/gems/passenger-6.0.4/download_cache
+*** Could not download https://oss-binaries.phusionpassenger.com/binaries/passenger/by_release/6.0.4/rubyext-ruby-2.6.3-universal-macosx.tar.gz: The requested URL returned error: 404 
+Attempting to download https://s3.amazonaws.com/phusion-passenger/binaries/passenger/by_release/6.0.4/rubyext-ruby-2.6.3-universal-macosx.tar.gz into /Users/laurenjin/Desktop/aq-dashboard/vendor/bundle/ruby/2.6.0/gems/passenger-6.0.4/download_cache
+*** Could not download https://s3.amazonaws.com/phusion-passenger/binaries/passenger/by_release/6.0.4/rubyext-ruby-2.6.3-universal-macosx.tar.gz: The requested URL returned error: 403 Forbidden
+Attempting to download https://github.com/phusion/passenger/releases/download/release-6.0.4/nginx-1.17.3-x86_64-macosx-10.15.tar.gz into /Users/laurenjin/Desktop/aq-dashboard/vendor/bundle/ruby/2.6.0/gems/passenger-6.0.4/download_cache
+Attempting to download https://github.com/phusion/passenger/releases/download/release-6.0.4/agent-x86_64-macosx-10.15.tar.gz into /Users/laurenjin/Desktop/aq-dashboard/vendor/bundle/ruby/2.6.0/gems/passenger-6.0.4/download_cache
+
+current directory: /Users/laurenjin/Desktop/aq-dashboard/vendor/bundle/ruby/2.6.0/gems/passenger-6.0.4/src/helper-scripts/download_binaries
+make "DESTDIR=" clean
+true
+
+current directory: /Users/laurenjin/Desktop/aq-dashboard/vendor/bundle/ruby/2.6.0/gems/passenger-6.0.4/src/helper-scripts/download_binaries
+make "DESTDIR="
+true
+
+current directory: /Users/laurenjin/Desktop/aq-dashboard/vendor/bundle/ruby/2.6.0/gems/passenger-6.0.4/src/helper-scripts/download_binaries
+make "DESTDIR=" install
+true

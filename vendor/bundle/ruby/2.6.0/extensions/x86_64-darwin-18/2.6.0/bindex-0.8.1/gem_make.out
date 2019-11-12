@@ -1,0 +1,15 @@
+current directory: /Users/laurenjin/Desktop/aq-dashboard/vendor/bundle/ruby/2.6.0/gems/bindex-0.8.1/ext/skiptrace
+/Users/laurenjin/.rvm/rubies/ruby-2.6.3/bin/ruby -I /Users/laurenjin/.rvm/rubies/ruby-2.6.3/lib/ruby/site_ruby/2.6.0 -r ./siteconf20191111-47009-4r0qa8.rb extconf.rb
+creating Makefile
+
+current directory: /Users/laurenjin/Desktop/aq-dashboard/vendor/bundle/ruby/2.6.0/gems/bindex-0.8.1/ext/skiptrace
+make "DESTDIR=" clean
+
+current directory: /Users/laurenjin/Desktop/aq-dashboard/vendor/bundle/ruby/2.6.0/gems/bindex-0.8.1/ext/skiptrace
+make "DESTDIR="
+compiling cruby.c
+linking shared-object skiptrace/internal/cruby.bundle
+
+current directory: /Users/laurenjin/Desktop/aq-dashboard/vendor/bundle/ruby/2.6.0/gems/bindex-0.8.1/ext/skiptrace
+make "DESTDIR=" install
+/usr/local/opt/coreutils/bin/ginstall -c -m 0755 cruby.bundle ./.gem.20191111-47009-138t824/skiptrace/internal
