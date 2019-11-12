@@ -38,10 +38,8 @@ class TagsController < ApplicationController
 
    def all
       @tag_title="All The Tests"
-      @builds = Build.where(env:@env_tag.name)
-
-      byebug
-
+      test_ids = Test.includes(:app_tag).pluck(:id)
+      @builds = Build.where(test_id: test_ids).where(env:@env_tag.name)
       @app_names = Tag.where(tag_type: "Application").pluck(:name)
       @feature_names = Tag.where(tag_type: "Feature").pluck(:name)
       @owner_names = Tag.where(tag_type: "Owner").pluck(:name)
