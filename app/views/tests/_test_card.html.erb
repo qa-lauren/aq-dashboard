@@ -62,3 +62,17 @@
 
 </div>
 <% end %>
+<script>
+$(".test-container-<%=test.id%>").hover(function() {
+   $("#edit-test-<%=test.id%>").show();
+   $("#jenkins-refresh<%=build.id%>").show();
+   $("#jenkins-stop<%=build.id%>").show();
+   $("#note-<%=build.test_id%>").show();
+}, function() {
+   $("#edit-test-<%=test.id%>").hide();
+   $("#jenkins-start<%=test.id%>").hide();
+   $("#jenkins-refresh<%=build.id%>").hide();
+   $("#jenkins-stop<%=build.id%>").hide();
+   $("#note-<%=build.test_id%>").hide();
+});
+</script>
